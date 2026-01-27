@@ -1,4 +1,7 @@
+ZDRUŽITEV DVEH PROJEKTOV
+
 Ideja: Spletna aplikacija za učenje osnov fizike s pomočjo interaktivnih simulacij
+
 Opis:
 Gre za izobraževalno aplikacijo, ki učencem omogoča, da na preprost in igriv način raziskujejo delovanje električnih tokokrogov. Namesto suhoparnega risanja shem na tablo lahko učenci sami gradijo kroge, prižigajo žarnice in odkrivajo, kako elektrika v resnici deluje.
 
