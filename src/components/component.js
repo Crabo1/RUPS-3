@@ -10,10 +10,30 @@ class Component {
         this.isVoltageSource = isVoltageSource;
         this.image = image
         this.debug_color = 0xff0000
+        this.measurement = 0;
+        this.hasMeasurement = false;
     }
 
-    conducts(){
+    conducts() {
         // Placeholder for component-specific conduction logic
+        return true;
+    }
+
+    update(measurement) {
+        // Base implementation - override in subclasses
+        this.measurement = measurement;
+        this.hasMeasurement = true;
+        return this.measurement;
+    }
+
+    getDisplayValue() {
+        // Base implementation - override in subclasses
+        return '';
+    }
+
+    getTooltip() {
+        // Base implementation - override in subclasses
+        return `Component: ${this.type}`;
     }
 }
 

@@ -27,7 +27,7 @@ export default class MenuScene extends Phaser.Scene {
         this.fixedComponents = [];
         this.isSwitchOn = false;
 
-        // ozdaje
+        // ozadje
         this.createDeskBackground(width, height);
 
         // zice 
@@ -61,6 +61,22 @@ export default class MenuScene extends Phaser.Scene {
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => this.toggleSwitch());
+
+        // Subtle arrow hint
+        const arrow = this.add.text(rectX, bottomWireY - 70, '↓', {
+            fontFamily: 'Arial',
+            fontSize: '25px',
+            color: '#83d0f9',
+            alpha: 0.5
+        }).setOrigin(0.5);
+
+        this.tweens.add({
+            targets: arrow,
+            y: bottomWireY - 55,
+            duration: 800,
+            yoyo: true,
+            repeat: -1
+        });
 
         // ui elem
         this.createUI();
@@ -224,7 +240,7 @@ export default class MenuScene extends Phaser.Scene {
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true })
             
-            // hower
+            // hover
             .on('pointerover', () => {
                 if (this.isSwitchOn)
                     this.startButtonBackground.fillStyle(0x0f5cadff, 1).fillRoundedRect(rectX - buttonWidth / 2, (rectY + 100) - buttonHeight / 2, buttonWidth, buttonHeight, cornerRadius);

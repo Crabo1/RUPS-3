@@ -133,7 +133,6 @@ export default class ScoreboardScene extends Phaser.Scene {
         });
 
         // gumb
-        if (this.cameFromMenu === false) {
             const backButton = this.add.text(width / 2, panelY + panelHeight - 40, '↩ Nazaj', {
                 fontFamily: 'Arial',
                 fontSize: '22px',
@@ -143,11 +142,15 @@ export default class ScoreboardScene extends Phaser.Scene {
                 .setOrigin(0.5)
                 .setInteractive({ useHandCursor: true })
                 .on('pointerover', () => backButton.setStyle({ color: '#0044cc' }))
-                .on('pointerout', () => backButton.setStyle({ color: '#0066ff' }))
+                .on('pointerout', () => backButton.setStyle({ color: '#6b6c6dff' }))
                 .on('pointerdown', () => {
-                    this.scene.start('WorkspaceScene');
+                    if (this.cameFromMenu) {
+                        this.scene.start('LabScene');
+                    }
+                    else {
+                        this.scene.start('WorkspaceScene');
+                    }
                 });
-        }
 
     }
 }
