@@ -1,0 +1,15 @@
+name: Login User
+method: POST
+url: http://localhost:5050/users/login
+body:
+  content: |-
+    {
+      "username" : "patrik",
+      "password" : "123456"
+    }
+  content_type: application/json
+headers:
+- name: content-type
+  value: application/json
+scripts:
+  on_response: auth_set.py

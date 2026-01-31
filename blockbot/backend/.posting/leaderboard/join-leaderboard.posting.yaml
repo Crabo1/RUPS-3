@@ -1,0 +1,4 @@
+name: Join leaderboard
+url: http://localhost:5050/leaderboard/join/24
+scripts:
+  on_request: auth.py

@@ -1,0 +1,4 @@
+name: Get all games
+url: http://localhost:5050/game/
+scripts:
+  on_request: auth.py

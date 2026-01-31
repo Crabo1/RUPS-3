@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+@plugin 'flowbite-react/plugin/tailwindcss';
+@source '../../.flowbite-react/class-list.json';
+
+@theme {
+  --color-primary: oklch(83.095% 0.14732 183.82);
+  --color-primary-50: oklch(99.625% 0.00528 197.07);
+  --color-primary-100: oklch(97.367% 0.03723 190.41);
+  --color-primary-200: oklch(93.781% 0.09267 189);
+  --color-primary-300: oklch(91.383% 0.133 187.44);
+  --color-primary-400: oklch(90.152% 0.15435 185.61);
+  --color-primary-500: oklch(83.095% 0.14732 183.82);
+  --color-primary-600: oklch(75.961% 0.13431 184.33);
+  --color-primary-700: oklch(68.911% 0.12183 184.36);
+  --color-primary-800: oklch(61.378% 0.10852 184.35);
+  --color-primary-900: oklch(53.913% 0.0953 184.4);
+  --color-primary-950: oklch(49.928% 0.08825 184.39);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #06b6d4;
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #0891b2;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.05);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #06b6d4;
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  background: #0891b2;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+input[type="range"]:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
+  background: #6b7280;
+}
+
+input[type="range"]:disabled::-moz-range-thumb {
+  cursor: not-allowed;
+  background: #6b7280;
+}

@@ -1,0 +1,4 @@
+name: Profile
+url: http://localhost:5050/users/profile
+scripts:
+  on_request: auth.py

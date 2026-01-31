@@ -1,0 +1,33 @@
+services:
+  backend:
+    container_name: rups-be
+    image: node-backend
+    build:
+      dockerfile: ./deploy/dev.dockerfile
+      context: ../
+    ports:
+      - 5050:5050
+    env_file:
+      - ../.env
+    volumes:
+      - ../src:/usr/src/app/src
+      - ../migrations:/usr/src/app/migrations
+      - ../.env:/usr/src/app/.env
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: rups-db
+    image: postgres:17
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+        - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: blockbot
+      POSTGRES_USER: be
+      POSTGRES_PASSWORD: passwd
+
+volumes:
+  pg_data:

@@ -1,0 +1,5 @@
+name: Get all levels
+url: http://localhost:5050/levels
+headers:
+- name: Authorization
+  value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoicGF0cmlrIiwiZW1haWwiOiJwYXRyaWtAcmlib2xpLm1lIiwiaWF0IjoxNzYyMTkzODQ3LCJleHAiOjE3NjIxOTc0NDd9.j0DncfSdsu2u5VzIVNf2wuh4YBCnCtIsbyCeUbeXNZc

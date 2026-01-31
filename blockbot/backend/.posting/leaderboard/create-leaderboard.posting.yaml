@@ -1,0 +1,14 @@
+name: Create leaderboard
+method: POST
+url: http://localhost:5050/leaderboard/
+body:
+  content: |-
+    {
+      "name": "Hihihihihhi"
+    }
+  content_type: application/json
+headers:
+- name: content-type
+  value: application/json
+scripts:
+  on_request: auth.py

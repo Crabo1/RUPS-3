@@ -1,0 +1,4 @@
+name: Get game
+url: http://localhost:5050/game/1
+scripts:
+  on_request: auth.py

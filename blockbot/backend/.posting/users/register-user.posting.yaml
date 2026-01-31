@@ -1,0 +1,14 @@
+name: Register User
+method: POST
+url: http://localhost:5050/users/register
+body:
+  content: |-
+    {
+      "username" : "patrik",
+      "email" : "patrik@riboli.me",
+      "password" : "123456"
+    }
+  content_type: application/json
+headers:
+- name: content-type
+  value: application/json

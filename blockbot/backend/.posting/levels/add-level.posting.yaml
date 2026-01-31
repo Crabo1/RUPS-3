@@ -1,0 +1,156 @@
+name: Add Level
+method: POST
+url: http://localhost:5050/levels/add
+body:
+  content: |-
+    {
+      "level" : "Black",
+      "pos" : 2,
+      "name": "Master Challenge",
+            "description": "Combine all your skills: movement, jumping, keys, and loops.",
+            "actions": [
+                "forward",
+                "turnLeft",
+                "turnRight",
+                "jump",
+                "use",
+                "loop"
+            ],
+            "levelMatrix": [
+                [
+                    "ground",
+                    "ground",
+                    "ground",
+                    "ground",
+                    "ground",
+                    "ground",
+                    "ground"
+                ],
+                [
+                    "ground",
+                    "path",
+                    "path",
+                    "ground",
+                    "path",
+                    "path",
+                    "ground"
+                ],
+                [
+                    "ground",
+                    "path",
+                    "ground",
+                    "ground",
+                    "ground",
+                    "path",
+                    "ground"
+                ],
+                [
+                    "ground",
+                    "path",
+                    "path",
+                    "path",
+                    "path",
+                    "path",
+                    "ground"
+                ],
+                [
+                    "ground",
+                    "ground",
+                    "ground",
+                    "path",
+                    "ground",
+                    "ground",
+                    "ground"
+                ],
+                [
+                    "ground",
+                    "path",
+                    "path",
+                    "path",
+                    "path",
+                    "path",
+                    "ground"
+                ],
+                [
+                    "ground",
+                    "ground",
+                    "ground",
+                    "ground",
+                    "ground",
+                    "ground",
+                    "ground"
+                ]
+            ],
+            "objectsMatrix": [
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    "start",
+                    null,
+                    null,
+                    null,
+                    "key",
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    "obstacle",
+                    null,
+                    "lockedFence",
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    "finish",
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ]
+            ]
+
+    }
+  content_type: application/json
+headers:
+- name: content-type
+  value: application/json
+- name: Authorization
+  value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoicGF0cmlrIiwiZW1haWwiOiJwYXRyaWtAcmlib2xpLm1lIiwiaWF0IjoxNzYyMTk2NDA1LCJleHAiOjE3NjIyMDAwMDV9.pttcte-I4UnbPZorqMEM8qFp15ZTc2XCyR_ME57oaQQ

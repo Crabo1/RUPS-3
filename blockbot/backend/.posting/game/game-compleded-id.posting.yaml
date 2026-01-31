@@ -1,0 +1,16 @@
+name: Game Compleded ${id}
+method: POST
+url: http://localhost:5050/game/completed/1
+body:
+  content: |-
+    {
+      "blocks_used" : "11100",
+      "stars" : 200,
+      "completed" : false
+    }
+  content_type: application/json
+headers:
+- name: content-type
+  value: application/json
+scripts:
+  on_request: auth.py

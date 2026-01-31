@@ -1,0 +1,4 @@
+name: Get rows
+url: http://localhost:5050/leaderboard/rows
+scripts:
+  on_request: auth.py
