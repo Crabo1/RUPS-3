@@ -12,7 +12,7 @@ export default class ScoreboardScene extends Phaser.Scene {
     preload() {
         // avatarji
         for (let i = 1; i <= 14; i++) {
-            this.load.image(`avatar${i}`, `src/avatars/avatar${i}.png`);
+            this.load.image(`avatar${i}`, `circuit/avatars/avatar${i}.png`);
         }
     }
 

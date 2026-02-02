@@ -26,14 +26,14 @@ export default class WorkspaceScene extends Phaser.Scene {
 
   preload() {
     this.graph = new CircuitGraph();
-    this.load.image('baterija', 'src/components/battery.png');
-    this.load.image('upor', 'src/components/resistor.png');
-    this.load.image('svetilka', 'src/components/lamp.png');
-    this.load.image('stikalo-on', 'src/components/switch-on.png');
-    this.load.image('stikalo-off', 'src/components/switch-off.png');
-    this.load.image('žica', 'src/components/wire.png');
-    this.load.image('ampermeter', 'src/components/ammeter.png');
-    this.load.image('voltmeter', 'src/components/voltmeter.png');
+    this.load.image('baterija', 'circuit/components/battery.png');
+    this.load.image('upor', 'circuit/components/resistor.png');
+    this.load.image('svetilka', 'circuit/components/lamp.png');
+    this.load.image('stikalo-on', 'circuit/components/switch-on.png');
+    this.load.image('stikalo-off', 'circuit/components/switch-off.png');
+    this.load.image('žica', 'circuit/components/wire.png');
+    this.load.image('ampermeter', 'circuit/components/ammeter.png');
+    this.load.image('voltmeter', 'circuit/components/voltmeter.png');
   }
 
   create() {
@@ -753,7 +753,7 @@ export default class WorkspaceScene extends Phaser.Scene {
             levelSpecificCheck = true;
           } else {
             levelSpecificCheck = false;
-            levelMessage = 'Voltmetr ne meri pravilno! Poveži ga vzporedno s svetilko.';
+            levelMessage = 'Voltmeter ne meri pravilno! Poveži ga vzporedno s svetilko.';
           }
         }
         break;
@@ -766,7 +766,7 @@ export default class WorkspaceScene extends Phaser.Scene {
             levelSpecificCheck = true;
           } else {
             levelSpecificCheck = false;
-            levelMessage = 'Ampermetr ne meri toka! Poveži ga zaporedno v krog.';
+            levelMessage = 'Ampermeter ne meri toka! Poveži ga zaporedno v krog.';
           }
         }
         break;

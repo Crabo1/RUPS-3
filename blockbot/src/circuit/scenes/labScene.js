@@ -6,17 +6,17 @@ export default class LabScene extends Phaser.Scene {
   }
 
   preload() {
-        this.load.image('avatar1', 'src/avatars/avatar1.png');
-        this.load.image('avatar2', 'src/avatars/avatar2.png');
-        this.load.image('avatar3', 'src/avatars/avatar3.png');
-        this.load.image('avatar4', 'src/avatars/avatar4.png');
-        this.load.image('avatar5', 'src/avatars/avatar5.png');
-        this.load.image('avatar6', 'src/avatars/avatar6.png');
-        this.load.image('avatar7', 'src/avatars/avatar7.png');
-        this.load.image('avatar8', 'src/avatars/avatar8.png');
-        this.load.image('avatar9', 'src/avatars/avatar9.png');
-        this.load.image('avatar10', 'src/avatars/avatar10.png');
-        this.load.image('avatar11', 'src/avatars/avatar11.png');
+        this.load.image('avatar1', 'circuit/avatars/avatar1.png');
+        this.load.image('avatar2', 'circuit/avatars/avatar2.png');
+        this.load.image('avatar3', 'circuit/avatars/avatar3.png');
+        this.load.image('avatar4', 'circuit/avatars/avatar4.png');
+        this.load.image('avatar5', 'circuit/avatars/avatar5.png');
+        this.load.image('avatar6', 'circuit/avatars/avatar6.png');
+        this.load.image('avatar7', 'circuit/avatars/avatar7.png');
+        this.load.image('avatar8', 'circuit/avatars/avatar8.png');
+        this.load.image('avatar9', 'circuit/avatars/avatar9.png');
+        this.load.image('avatar10', 'circuit/avatars/avatar10.png');
+        this.load.image('avatar11', 'circuit/avatars/avatar11.png');
     }
 
   create() {
