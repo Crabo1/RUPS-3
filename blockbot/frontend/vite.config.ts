@@ -14,9 +14,19 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
+    include: ['phaser'],
     esbuildOptions: {
       loader: {
         '.js': 'jsx',
+      },
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          phaser: ['phaser'],
+        },
       },
     },
   },
