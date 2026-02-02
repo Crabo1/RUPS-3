@@ -5,20 +5,6 @@ export default class LabScene extends Phaser.Scene {
     super('LabScene');
   }
 
-  preload() {
-        this.load.image('avatar1', 'circuit/avatars/avatar1.png');
-        this.load.image('avatar2', 'circuit/avatars/avatar2.png');
-        this.load.image('avatar3', 'circuit/avatars/avatar3.png');
-        this.load.image('avatar4', 'circuit/avatars/avatar4.png');
-        this.load.image('avatar5', 'circuit/avatars/avatar5.png');
-        this.load.image('avatar6', 'circuit/avatars/avatar6.png');
-        this.load.image('avatar7', 'circuit/avatars/avatar7.png');
-        this.load.image('avatar8', 'circuit/avatars/avatar8.png');
-        this.load.image('avatar9', 'circuit/avatars/avatar9.png');
-        this.load.image('avatar10', 'circuit/avatars/avatar10.png');
-        this.load.image('avatar11', 'circuit/avatars/avatar11.png');
-    }
-
   create() {
     const { width, height } = this.cameras.main;
     
@@ -108,38 +94,7 @@ export default class LabScene extends Phaser.Scene {
       tableSurface.setFillStyle(0xa0826d);
     });
 
-    const username = localStorage.getItem('username');
-    const pfp = localStorage.getItem('profilePic');
-
-    // avvatar
-    const avatarX = 230;
-    const avatarY = 55;
-    const avatarRadius = 30;
-    const borderThickness = 4;
-
-    // zunanji siv krog (rob)
-    const borderCircle = this.add.circle(avatarX, avatarY, avatarRadius + borderThickness, 0xcccccc);
-
-    // notranji bel krog (ozadje za avatar)
-    const innerCircle = this.add.circle(avatarX, avatarY, avatarRadius, 0xffffff);
-
-    // slika avatarja
-    const avatarImage = this.add.image(avatarX, avatarY, pfp)
-        .setDisplaySize(avatarRadius * 2, avatarRadius * 2);
-
-    // maska, da je slika samo znotraj notranjega kroga
-    const mask = innerCircle.createGeometryMask();
-    avatarImage.setMask(mask);
-
-    // pozdravno besedilo
-    this.add.text(avatarX + 60, avatarY - 10, `Dobrodošel v laboratoriju, uporabnik ${username}!`, {
-        fontSize: '22px',
-        color: '#222',
-        fontStyle: 'bold'
-    });
-
-
-    const logoutButton = this.add.text(40, 30, '↩ Odjavi se', {
+    const logoutButton = this.add.text(40, 30, '↩ Nazaj', {
         fontFamily: 'Arial',
         fontSize: '20px',
         color: '#0066ff',
@@ -159,38 +114,5 @@ export default class LabScene extends Phaser.Scene {
     const cornerRadius = 10;
     const rightMargin = 60;
     const topMargin = 40;
-
-    // za scoreboard
-    const scoreButtonBg = this.add.graphics();
-    scoreButtonBg.fillStyle(0x3399ff, 1);
-    scoreButtonBg.fillRoundedRect(width - buttonWidth - rightMargin, topMargin, buttonWidth, buttonHeight, cornerRadius);
-
-    const scoreButton = this.add.text(width - buttonWidth / 2 - rightMargin, topMargin + buttonHeight / 2, 'Lestvica', {
-        fontFamily: 'Arial',
-        fontSize: '20px',
-        color: '#ffffff'
-    })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => {
-            scoreButtonBg.clear();
-            scoreButtonBg.fillStyle(0x0f5cad, 1);
-            scoreButtonBg.fillRoundedRect(width - buttonWidth - rightMargin, topMargin, buttonWidth, buttonHeight, cornerRadius);
-        })
-        .on('pointerout', () => {
-            scoreButtonBg.clear();
-            scoreButtonBg.fillStyle(0x3399ff, 1);
-            scoreButtonBg.fillRoundedRect(width - buttonWidth - rightMargin, topMargin, buttonWidth, buttonHeight, cornerRadius);
-        })
-        .on('pointerdown', () => {
-            this.scene.start('ScoreboardScene', {cameFromMenu: true});
-        });
-
-    // this.input.keyboard.on('keydown-ESC', () => {
-    //     this.scene.start('MenuScene');
-    // });
-
-    //console.log(`${localStorage.getItem('username')}`);
-    console.log(JSON.parse(localStorage.getItem('users')));
   }
 }

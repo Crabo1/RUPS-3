@@ -7,6 +7,7 @@ import { LevelGrid } from './LevelGrid';
 import { GameControls } from './GameControls';
 import { useGameCompletion } from '../../hooks/useGameCompletion';
 import type { Level, GameAction, GameState, Direction } from '../../types/game';
+import CircuitSimulator from '../CircuitSimulator';
 
 interface GamePlayProps {
   level: Level;
@@ -31,6 +32,7 @@ export function GamePlay({
   const { completeGame } = useGameCompletion();
   const [executionSpeed, setExecutionSpeed] = useState(1);
   const [actionHistory, setActionHistory] = useState<GameAction[][]>([]);
+  const [showCircuit, setShowCircuit] = useState(false);
 
   const MAX_ACTIONS = 20;
 
@@ -223,7 +225,14 @@ export function GamePlay({
                         <Button color="alternative" onClick={onBack}>
                           Nazaj na izbiro stopenj
                         </Button>
-                      </div>
+                        <Button color="purple" onClick={() => setShowCircuit(true)}
+                        >
+                          Odpri Circuit Simulator
+                        </Button>
+                      </div>            
+                      {showCircuit && (
+                        <CircuitSimulator onClose={() => setShowCircuit(false)} />
+                      )}
                     </div>
                   </ModalBody>
                 </Modal>

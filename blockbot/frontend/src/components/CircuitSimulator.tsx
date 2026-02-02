@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Phaser from 'phaser';
 
-// Import circuit scenes - adjust paths based on your structure
-// Note: Adjust the number of ../ based on where CircuitSimulator.tsx is located
-// If in frontend/src/components/, use ../../../src/circuit/scenes/
-// If path issues occur, check console and adjust
 import MenuScene from '../../../src/circuit/scenes/menuScene';
 import LabScene from '../../../src/circuit/scenes/labScene';
 import LoginScene from '../../../src/circuit/scenes/loginScene';
@@ -85,7 +81,7 @@ export default function CircuitSimulator({ inventory = [], onClose }: CircuitSim
           onClick={onClose}
           className="absolute top-4 right-4 z-[60] bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold shadow-lg transition-colors text-lg"
         >
-          ✕ Zapri Circuit
+          ✕ Zapri
         </button>
         
         {/* Error display */}

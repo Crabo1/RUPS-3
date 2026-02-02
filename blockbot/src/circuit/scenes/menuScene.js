@@ -12,12 +12,12 @@ export default class MenuScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('battery', 'circuit/components/battery.png');
-        this.load.image('lamp', 'circuit/components/lamp.png');
-        this.load.image('resistor', 'circuit/components/resistor.png');
-        this.load.image('switch-off', 'circuit/components/switch-off.png');
-        this.load.image('switch-on', 'circuit/components/switch-on.png');
-        this.load.image('wire', 'circuit/components/wire.png');
+        this.load.image('battery', '/circuit/components/battery.png');
+        this.load.image('lamp', '/circuit/components/lamp.png');
+        this.load.image('resistor', '/circuit/components/resistor.png');
+        this.load.image('switch-off', '/circuit/components/switch-off.png');
+        this.load.image('switch-on', '/circuit/components/switch-on.png');
+        this.load.image('wire', '/circuit/components/wire.png');
     }
 
     create() {
@@ -208,7 +208,7 @@ export default class MenuScene extends Phaser.Scene {
         
         // vogali gumba
         const cornerRadius = 15; 
-        const buttonWidth = 250; 
+        const buttonWidth = 300; 
         const buttonHeight = 60;
         
         // ozadje gumba
@@ -232,9 +232,9 @@ export default class MenuScene extends Phaser.Scene {
         }).setOrigin(0.5);
 
         // gumb
-        this.loginButton = this.add.text(rectX, rectY + 100, '▶ Začni igro', {
+        this.loginButton = this.add.text(rectX, rectY + 100, '▶ Zgradi električni krog', {
             fontFamily: 'Arial',
-            fontSize: '32px',
+            fontSize: '26px',
             color: '#aaaaaa', 
         })
             .setOrigin(0.5)
@@ -250,7 +250,7 @@ export default class MenuScene extends Phaser.Scene {
                     this.startButtonBackground.fillStyle(0x3399ff, 1).fillRoundedRect(rectX - buttonWidth / 2, (rectY + 100) - buttonHeight / 2, buttonWidth, buttonHeight, cornerRadius);
             })
             .on('pointerdown', () => {
-                if (this.isSwitchOn) this.scene.start('LoginScene');
+                if (this.isSwitchOn) this.scene.start('WorkspaceScene');
             });
 
         console.log(`${localStorage.getItem('username')}`);
@@ -268,7 +268,7 @@ export default class MenuScene extends Phaser.Scene {
 enableStartButton(isActive) {
         // zaobljen gumb
         const cornerRadius = 15;
-        const buttonWidth = 250;
+        const buttonWidth = 300;
         const buttonHeight = 60;
         const rectX = this.scale.width / 2;
         const rectY = this.scale.height / 2 - 50;

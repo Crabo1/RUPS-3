@@ -26,14 +26,14 @@ export default class WorkspaceScene extends Phaser.Scene {
 
   preload() {
     this.graph = new CircuitGraph();
-    this.load.image('baterija', 'circuit/components/battery.png');
-    this.load.image('upor', 'circuit/components/resistor.png');
-    this.load.image('svetilka', 'circuit/components/lamp.png');
-    this.load.image('stikalo-on', 'circuit/components/switch-on.png');
-    this.load.image('stikalo-off', 'circuit/components/switch-off.png');
-    this.load.image('žica', 'circuit/components/wire.png');
-    this.load.image('ampermeter', 'circuit/components/ammeter.png');
-    this.load.image('voltmeter', 'circuit/components/voltmeter.png');
+    this.load.image('baterija', '/circuit/components/battery.png');
+    this.load.image('upor', '/circuit/components/resistor.png');
+    this.load.image('svetilka', '/circuit/components/lamp.png');
+    this.load.image('stikalo-on', '/circuit/components/switch-on.png');
+    this.load.image('stikalo-off', '/circuit/components/switch-off.png');
+    this.load.image('žica', '/circuit/components/wire.png');
+    this.load.image('ampermeter', '/circuit/components/ammeter.png');
+    this.load.image('voltmeter', '/circuit/components/voltmeter.png');
   }
 
   create() {
@@ -78,7 +78,6 @@ export default class WorkspaceScene extends Phaser.Scene {
 
     this.currentFlowParticles = [];
 
-    // V razredu WorkspaceScene zamenjaj circuitChallenges array:
     this.circuitChallenges = [
       {
         prompt: 'Poveži baterijo s svetilko, da bo prižgana',
@@ -193,10 +192,9 @@ export default class WorkspaceScene extends Phaser.Scene {
       return { bg, text };
     };
 
-    makeButton(width - 140, 25, 'Izbira levela', () => this.scene.start('LevelScene'));
-    makeButton(width - 140, 75, 'Lestvica', () => this.scene.start('ScoreboardScene', { cameFromMenu: false }));
-    makeButton(width - 140, 125, 'Preveri krog', () => this.checkCircuit());
-    makeButton(width - 140, 175, 'Namig', () => this.showHint());
+    makeButton(width - 140, 110, 'Izbira levela', () => this.scene.start('LevelScene'));
+    makeButton(width - 140, 160, 'Preveri krog', () => this.checkCircuit());
+    makeButton(width - 140, 210, 'Namig', () => this.showHint());
 
     const panelWidth = 150;
     this.add.rectangle(0, 0, panelWidth, height, 0xc0c0c0).setOrigin(0);
@@ -276,14 +274,6 @@ export default class WorkspaceScene extends Phaser.Scene {
           this.sim = true;
 
           this.currentFlowAnim.start(result, this.placedComponents, this.graph);
-        } else {
-          // this.checkText.setStyle({ color: '#cc0000' });
-          // if (result.status === -1) {
-          //   this.checkText.setText('Manjka ti baterija');
-          // } else if (result.status === 0) {
-          //   this.checkText.setText('Električni tok ni sklenjen');
-          // }
-          // this.sim = false;
         }
       } else {
         this.checkText.setStyle({ color: '#cc0000' });

@@ -109,7 +109,7 @@ export default class LevelScene extends Phaser.Scene {
         }
 
         // Reset progress button
-        const resetButton = this.add.text(width - 20, 20, '♻ Ponastavi napredek', {
+        const resetButton = this.add.text(width - 1075, 620, '♻ Ponastavi napredek', {
             fontSize: '18px',
             color: '#ff4444'
         })
@@ -147,7 +147,7 @@ export default class LevelScene extends Phaser.Scene {
             .on('pointerout', () => backButton.setColor('#00aaff'))
             .on('pointerdown', () => {
                 // Go back to main menu or lab scene
-                this.scene.start('LabScene');
+                this.scene.start('MenuScene');
             });
     }
 }
