@@ -40,6 +40,7 @@ const actionLabels: Record<Action, string> = {
   turnRight: 'turn right (90) degrees',
   jump: 'jump',
   use: 'use key',
+  pickup: 'pick up',
   loop: 'repeat (x)',
 };
 
@@ -49,6 +50,7 @@ const actionTooltips: Record<Action, string> = {
   turnRight: 'Obrni se desno',
   jump: 'Skoči naprej',
   use: 'Uporabi predmet',
+  pickup: 'Poberi predmet',
   loop: 'Ponavljanje',
 };
 

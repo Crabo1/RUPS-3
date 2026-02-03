@@ -4,7 +4,8 @@
         "name": "Prvi koraki",
         "description": "Spoznaj osnove programiranja! Uporabi ukaz 'premakni se naprej' za dosego cilja.",
         "actions": [
-            "forward"
+            "forward",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -113,7 +114,8 @@
         "description": "Programi izvajajo ukaze po vrsti. Sestavi zaporedje: premik in zavoj levo.",
         "actions": [
             "forward",
-            "turnLeft"
+            "turnLeft",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -196,7 +198,8 @@
         "description": "Nauči se upravljati s smerjo. Kombiniraj premik in zavoj desno.",
         "actions": [
             "forward",
-            "turnRight"
+            "turnRight",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -281,7 +284,8 @@
             "forward",
             "turnLeft",
             "turnRight",
-            "jump"
+            "jump",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -392,7 +396,8 @@
             "forward",
             "turnLeft",
             "turnRight",
-            "use"
+            "use",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -504,7 +509,8 @@
             "turnLeft",
             "turnRight",
             "use",
-            "jump"
+            "jump",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -615,7 +621,8 @@
             "forward",
             "turnLeft",
             "turnRight",
-            "loop"
+            "loop",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -728,7 +735,8 @@
             "turnRight",
             "jump",
             "use",
-            "loop"
+            "loop",
+            "pickup"
         ],
         "levelMatrix": [
             [

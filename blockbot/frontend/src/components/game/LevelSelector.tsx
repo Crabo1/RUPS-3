@@ -18,6 +18,7 @@ const ACTION_BLOCKS: Record<Action, string> = {
   turnRight: 'turn right',
   jump: 'jump',
   use: 'use',
+  pickup: 'pick up',
   loop: 'repeat',
 };
 
@@ -28,6 +29,7 @@ const ACTION_NAMES: Record<Action, string> = {
   turnRight: 'turn right (90) degrees',
   jump: 'jump',
   use: 'use key',
+  pickup: 'pick up',
   loop: 'repeat (x)',
 };
 

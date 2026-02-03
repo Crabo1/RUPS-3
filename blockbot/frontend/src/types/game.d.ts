@@ -4,6 +4,7 @@ export type Action =
   | 'turnRight'
   | 'jump'
   | 'use'
+  | 'pickup'
   | 'loop';
 
 export type CellType = 'path' | 'ground';
