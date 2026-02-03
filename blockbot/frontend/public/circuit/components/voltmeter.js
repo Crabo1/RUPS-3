@@ -2,7 +2,7 @@ import { Component } from './component.js';
 
 class Voltmeter extends Component {
     constructor(id, start, end) {
-        super(id, 'voltmeter', start, end, 'src/components/voltmeter.png', false);
+        super(id, 'voltmeter', start, end, 'src/components/voltmeter.svg', false);
         this.resistance = 1000000; // 1MΩ - visok upor za merjenje napetosti
         this.measurement = 0; // Izmerjena napetost v voltih
         this.is_connected = false;

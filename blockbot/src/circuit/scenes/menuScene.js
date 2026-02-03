@@ -12,12 +12,12 @@ export default class MenuScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('battery', '/circuit/components/battery.png');
-        this.load.image('lamp', '/circuit/components/lamp.png');
-        this.load.image('resistor', '/circuit/components/resistor.png');
-        this.load.image('switch-off', '/circuit/components/switch-off.png');
-        this.load.image('switch-on', '/circuit/components/switch-on.png');
-        this.load.image('wire', '/circuit/components/wire.png');
+        this.load.image('battery', '/circuit/components/battery.svg');
+        this.load.image('lamp', '/circuit/components/lamp.svg');
+        this.load.image('resistor', '/circuit/components/resistor.svg');
+        this.load.image('switch-off', '/circuit/components/switch-off.svg');
+        this.load.image('switch-on', '/circuit/components/switch-on.svg');
+        this.load.image('wire', '/circuit/components/wire.svg');
     }
 
     create() {

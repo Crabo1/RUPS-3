@@ -2,7 +2,7 @@ import { Component } from './component.js';
 
 class Bulb extends Component {
     constructor(id, start, end, resistance = 100) {
-        super(id, 'bulb', start, end, 'src/components/lamp.png', false);
+        super(id, 'bulb', start, end, 'src/components/lamp.svg', false);
         this.resistance = resistance;      // 100Ω - tipična majhna žarnica
         this.is_on = false;
         this.brightness = 0;               // 0-100%
