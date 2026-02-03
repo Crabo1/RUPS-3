@@ -4,7 +4,8 @@
         "name": "Prvi koraki",
         "description": "Spoznaj osnove programiranja! Uporabi ukaz 'premakni se naprej' za dosego cilja.",
         "actions": [
-            "forward"
+            "forward",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -12,9 +13,19 @@
                 "ground",
                 "ground",
                 "ground",
+                "ground",
                 "ground"
             ],
             [
+                "ground",
+                "ground",
+                "ground",
+                "ground",
+                "ground",
+                "ground"
+            ],
+            [
+                "ground",
                 "ground",
                 "ground",
                 "ground",
@@ -26,6 +37,7 @@
                 "path",
                 "path",
                 "path",
+                "path",
                 "ground"
             ],
             [
@@ -33,9 +45,11 @@
                 "ground",
                 "ground",
                 "ground",
+                "ground",
                 "ground"
             ],
             [
+                "ground",
                 "ground",
                 "ground",
                 "ground",
@@ -49,9 +63,19 @@
                 null,
                 null,
                 null,
+                null,
                 null
             ],
             [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            [
+                null,
                 null,
                 null,
                 null,
@@ -61,7 +85,8 @@
             [
                 null,
                 "start",
-                null,
+                "battery",
+                "bulb",
                 "finish",
                 null
             ],
@@ -70,9 +95,11 @@
                 null,
                 null,
                 null,
+                null,
                 null
             ],
             [
+                null,
                 null,
                 null,
                 null,
@@ -87,7 +114,8 @@
         "description": "Programi izvajajo ukaze po vrsti. Sestavi zaporedje: premik in zavoj levo.",
         "actions": [
             "forward",
-            "turnLeft"
+            "turnLeft",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -106,16 +134,16 @@
             ],
             [
                 "ground",
-                "path",
-                "path",
+                "ground",
+                "ground",
                 "path",
                 "ground"
             ],
             [
                 "ground",
-                "ground",
-                "ground",
-                "ground",
+                "path",
+                "path",
+                "path",
                 "ground"
             ],
             [
@@ -143,16 +171,16 @@
             ],
             [
                 null,
-                "start",
                 null,
                 null,
+                "switch",
                 null
             ],
             [
                 null,
-                null,
-                null,
-                null,
+                "start",
+                "battery",
+                "bulb",
                 null
             ],
             [
@@ -170,7 +198,8 @@
         "description": "Nauči se upravljati s smerjo. Kombiniraj premik in zavoj desno.",
         "actions": [
             "forward",
-            "turnRight"
+            "turnRight",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -182,15 +211,15 @@
             ],
             [
                 "ground",
-                "ground",
-                "ground",
-                "ground",
+                "path",
+                "path",
+                "path",
                 "ground"
             ],
             [
                 "ground",
-                "path",
-                "path",
+                "ground",
+                "ground",
                 "path",
                 "ground"
             ],
@@ -219,16 +248,16 @@
             ],
             [
                 null,
-                null,
-                null,
-                null,
+                "start",
+                "battery",
+                "bulb",
                 null
             ],
             [
                 null,
-                "start",
                 null,
                 null,
+                "resistor",
                 null
             ],
             [
@@ -255,7 +284,8 @@
             "forward",
             "turnLeft",
             "turnRight",
-            "jump"
+            "jump",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -263,16 +293,35 @@
                 "ground",
                 "ground",
                 "ground",
+                "ground",
+                "ground"
+            ],
+            [
+                "ground",
+                "path",
+                "path",
+                "ground",
+                "ground",
                 "ground"
             ],
             [
                 "ground",
                 "ground",
+                "path",
                 "ground",
                 "ground",
                 "ground"
             ],
             [
+                "ground",
+                "ground",
+                "path",
+                "ground",
+                "ground",
+                "ground"
+            ],
+            [
+                "ground",
                 "ground",
                 "path",
                 "path",
@@ -281,12 +330,6 @@
             ],
             [
                 "ground",
-                "ground",
-                "ground",
-                "ground",
-                "ground"
-            ],
-            [
                 "ground",
                 "ground",
                 "ground",
@@ -300,30 +343,43 @@
                 null,
                 null,
                 null,
-                null
-            ],
-            [
-                null,
-                null,
-                null,
                 null,
                 null
             ],
             [
                 null,
                 "start",
+                "bulb",
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
                 "obstacle",
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
+                "battery",
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
+                null,
+                "bulb",
                 "finish",
                 null
             ],
             [
                 null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
                 null,
                 null,
                 null,
@@ -340,7 +396,8 @@
             "forward",
             "turnLeft",
             "turnRight",
-            "use"
+            "use",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -354,14 +411,6 @@
             [
                 "ground",
                 "ground",
-                "ground",
-                "ground",
-                "ground",
-                "ground"
-            ],
-            [
-                "ground",
-                "path",
                 "path",
                 "path",
                 "path",
@@ -370,7 +419,7 @@
             [
                 "ground",
                 "ground",
-                "ground",
+                "path",
                 "ground",
                 "ground",
                 "ground"
@@ -378,7 +427,15 @@
             [
                 "ground",
                 "ground",
+                "path",
                 "ground",
+                "ground",
+                "ground"
+            ],
+            [
+                "ground",
+                "path",
+                "path",
                 "ground",
                 "ground",
                 "ground"
@@ -404,15 +461,7 @@
             [
                 null,
                 null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                "start",
-                "key",
+                "battery",
                 "lock",
                 "finish",
                 null
@@ -420,7 +469,7 @@
             [
                 null,
                 null,
-                null,
+                "bulb",
                 null,
                 null,
                 null
@@ -428,7 +477,15 @@
             [
                 null,
                 null,
+                "key",
                 null,
+                null,
+                null
+            ],
+            [
+                null,
+                "start",
+                "bulb",
                 null,
                 null,
                 null
@@ -452,7 +509,8 @@
             "turnLeft",
             "turnRight",
             "use",
-            "jump"
+            "jump",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -523,9 +581,9 @@
             ],
             [
                 null,
+                "battery",
                 null,
-                null,
-                null,
+                "bulb",
                 null,
                 null
             ],
@@ -540,7 +598,7 @@
             [
                 null,
                 null,
-                null,
+                "voltmeter",
                 "obstacle",
                 null,
                 null
@@ -563,7 +621,8 @@
             "forward",
             "turnLeft",
             "turnRight",
-            "loop"
+            "loop",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -637,6 +696,14 @@
                 null,
                 null,
                 null,
+                "bulb",
+                null
+            ],
+            [
+                null,
+                "battery",
+                null,
+                null,
                 null,
                 null
             ],
@@ -644,15 +711,7 @@
                 null,
                 null,
                 null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                null,
-                null,
-                null,
+                "ammeter",
                 null,
                 null
             ],
@@ -676,7 +735,8 @@
             "turnRight",
             "jump",
             "use",
-            "loop"
+            "loop",
+            "pickup"
         ],
         "levelMatrix": [
             [
@@ -757,18 +817,18 @@
                 null,
                 "start",
                 null,
-                null,
+                "resistor",
                 null,
                 "key",
                 null
             ],
             [
                 null,
+                "battery",
                 null,
+                "bulb",
                 null,
-                null,
-                null,
-                null,
+                "resistor",
                 null
             ],
             [
@@ -776,7 +836,7 @@
                 null,
                 "obstacle",
                 null,
-                null,
+                "voltmeter",
                 null,
                 null
             ],

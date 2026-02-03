@@ -238,6 +238,29 @@ function performUseAction(state: GameState): GameState {
   };
 }
 
+function performPickupAction(state: GameState): GameState {
+  const currentPos = state.playerPosition;
+  const obj = state.objectsMatrix[currentPos.y][currentPos.x];
+
+  if (!obj || obj === 'start' || obj === 'finish') {
+    return {
+      ...state,
+      moveLog: [...state.moveLog, 'Nothing to pick up here'],
+    };
+  }
+
+  const objectsMatrix = state.objectsMatrix.map((row) => [...row]);
+  objectsMatrix[currentPos.y][currentPos.x] = null;
+  soundManager.play('pickup');
+
+  return {
+    ...state,
+    objectsMatrix,
+    inventory: [...state.inventory, obj],
+    moveLog: [...state.moveLog, `Picked up ${obj}`],
+  };
+}
+
 function executeAction(
   state: GameState,
   action: Action,
@@ -258,6 +281,8 @@ function executeAction(
       return jump(state, level);
     case 'use':
       return performUseAction(state);
+    case 'pickup':
+      return performPickupAction(state);
     default:
       return state;
   }

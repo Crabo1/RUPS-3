@@ -3,9 +3,9 @@ import { Component } from "./component.js";
 class Switch extends Component{
     constructor(id, start, end, is_on=false) {
         if (is_on)
-            super(id, 'switch', start, end, 'src/components/switch-on.png', true);
+            super(id, 'switch', start, end, 'src/components/switch-on.svg', true);
         else
-            super(id, 'switch', start, end, 'src/components/switch-off.png', true);
+            super(id, 'switch', start, end, 'src/components/switch-off.svg', true);
         this.is_on = is_on
         this.resistance = 0.5;  // 0.5Ω - zelo majhen upor ko je zaprto
     }

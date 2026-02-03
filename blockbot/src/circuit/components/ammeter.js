@@ -2,7 +2,7 @@ import { Component } from './component.js';
 
 class Ammeter extends Component {
     constructor(id, start, end) {
-        super(id, 'ammeter', start, end, 'src/components/ammeter.png', false);
+        super(id, 'ammeter', start, end, 'src/components/ammeter.svg', false);
         this.resistance = 0.01; // 0.01Ω - zelo nizek upor za merjenje toka
         this.measurement = 0; // Izmerjen tok v amperih
         this.is_connected = false;

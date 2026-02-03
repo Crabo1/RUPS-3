@@ -26,14 +26,14 @@ export default class WorkspaceScene extends Phaser.Scene {
 
   preload() {
     this.graph = new CircuitGraph();
-    this.load.image('baterija', '/circuit/components/battery.png');
-    this.load.image('upor', '/circuit/components/resistor.png');
-    this.load.image('svetilka', '/circuit/components/lamp.png');
-    this.load.image('stikalo-on', '/circuit/components/switch-on.png');
-    this.load.image('stikalo-off', '/circuit/components/switch-off.png');
-    this.load.image('žica', '/circuit/components/wire.png');
-    this.load.image('ampermeter', '/circuit/components/ammeter.png');
-    this.load.image('voltmeter', '/circuit/components/voltmeter.png');
+    this.load.image('baterija', '/circuit/components/battery.svg');
+    this.load.image('upor', '/circuit/components/resistor.svg');
+    this.load.image('svetilka', '/circuit/components/lamp.svg');
+    this.load.image('stikalo-on', '/circuit/components/switch-on.svg');
+    this.load.image('stikalo-off', '/circuit/components/switch-off.svg');
+    this.load.image('žica', '/circuit/components/wire.svg');
+    this.load.image('ampermeter', '/circuit/components/ammeter.svg');
+    this.load.image('voltmeter', '/circuit/components/voltmeter.svg');
   }
 
   create() {
