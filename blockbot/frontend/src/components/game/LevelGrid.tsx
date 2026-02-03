@@ -80,6 +80,48 @@ export function LevelGrid({
                   className="absolute inset-0 h-full w-full p-2"
                 />
               )}
+              {currentObj === 'bulb' && (
+                <img
+                  src="/circuit/components/lamp.svg"
+                  alt="Bulb"
+                  className="absolute inset-0 h-full w-full p-2"
+                />
+              )}
+              {currentObj === 'ammeter' && (
+                <img
+                  src="/circuit/components/ammeter.svg"
+                  alt="Ammeter"
+                  className="absolute inset-0 h-full w-full p-2"
+                />
+              )}
+              {currentObj === 'battery' && (
+                <img
+                  src="/circuit/components/battery.svg"
+                  alt="Battery"
+                  className="absolute inset-0 h-full w-full p-2"
+                />
+              )}
+              {currentObj === 'resistor' && (
+                <img
+                  src="/circuit/components/resistor.svg"
+                  alt="Resistor"
+                  className="absolute inset-0 h-full w-full p-2"
+                />
+              )}
+              {currentObj === 'switch' && (
+                <img
+                  src="/circuit/components/switch-off.svg"
+                  alt="Switch"
+                  className="absolute inset-0 h-full w-full p-2"
+                />
+              )}
+              {currentObj === 'voltmeter' && (
+                <img
+                  src="/circuit/components/voltmeter.svg"
+                  alt="Voltmeter"
+                  className="absolute inset-0 h-full w-full p-2"
+                />
+              )}
             </div>
           );
         }),

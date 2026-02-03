@@ -8,7 +8,18 @@ export type Action =
 
 export type CellType = 'path' | 'ground';
 
-export type ObjectType = 'start' | 'finish' | 'key' | 'lock' | 'obstacle';
+export type ObjectType =
+  | 'start'
+  | 'finish'
+  | 'key'
+  | 'lock'
+  | 'obstacle'
+  | 'bulb'
+  | 'ammeter'
+  | 'battery'
+  | 'resistor'
+  | 'switch'
+  | 'voltmeter';
 
 export type Direction = 'up' | 'down' | 'left' | 'right';
 

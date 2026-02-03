@@ -38,9 +38,13 @@ export function LevelSelector({
   error,
 }: LevelSelectProps) {
   const { completedGames } = useGameCompletion();
-  const defaultLevel = useMemo(
-    () => (levels.length > 0 ? levels[0] : null),
+  const sortedLevels = useMemo(
+    () => [...levels].sort((a, b) => a.index - b.index),
     [levels],
+  );
+  const defaultLevel = useMemo(
+    () => (sortedLevels.length > 0 ? sortedLevels[0] : null),
+    [sortedLevels],
   );
   const [selectedLevel, setSelectedLevel] = useState<Level | null>(null);
 
@@ -155,7 +159,7 @@ export function LevelSelector({
 
             <div className="flex w-[50%] flex-col items-center justify-end">
               <div className="grid grid-cols-5 gap-0">
-                {levels.slice(0, 12).map((level) => {
+                {sortedLevels.slice(0, 12).map((level) => {
                   const stars = completedLevelsMap.get(level.index);
                   const isCompleted = stars !== undefined;
 

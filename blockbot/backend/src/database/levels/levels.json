@@ -12,9 +12,19 @@
                 "ground",
                 "ground",
                 "ground",
+                "ground",
                 "ground"
             ],
             [
+                "ground",
+                "ground",
+                "ground",
+                "ground",
+                "ground",
+                "ground"
+            ],
+            [
+                "ground",
                 "ground",
                 "ground",
                 "ground",
@@ -26,6 +36,7 @@
                 "path",
                 "path",
                 "path",
+                "path",
                 "ground"
             ],
             [
@@ -33,9 +44,11 @@
                 "ground",
                 "ground",
                 "ground",
+                "ground",
                 "ground"
             ],
             [
+                "ground",
                 "ground",
                 "ground",
                 "ground",
@@ -49,9 +62,19 @@
                 null,
                 null,
                 null,
+                null,
                 null
             ],
             [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            [
+                null,
                 null,
                 null,
                 null,
@@ -61,7 +84,8 @@
             [
                 null,
                 "start",
-                null,
+                "battery",
+                "bulb",
                 "finish",
                 null
             ],
@@ -70,9 +94,11 @@
                 null,
                 null,
                 null,
+                null,
                 null
             ],
             [
+                null,
                 null,
                 null,
                 null,
@@ -106,16 +132,16 @@
             ],
             [
                 "ground",
-                "path",
-                "path",
+                "ground",
+                "ground",
                 "path",
                 "ground"
             ],
             [
                 "ground",
-                "ground",
-                "ground",
-                "ground",
+                "path",
+                "path",
+                "path",
                 "ground"
             ],
             [
@@ -143,16 +169,16 @@
             ],
             [
                 null,
-                "start",
                 null,
                 null,
+                "switch",
                 null
             ],
             [
                 null,
-                null,
-                null,
-                null,
+                "start",
+                "battery",
+                "bulb",
                 null
             ],
             [
@@ -182,15 +208,15 @@
             ],
             [
                 "ground",
-                "ground",
-                "ground",
-                "ground",
+                "path",
+                "path",
+                "path",
                 "ground"
             ],
             [
                 "ground",
-                "path",
-                "path",
+                "ground",
+                "ground",
                 "path",
                 "ground"
             ],
@@ -219,16 +245,16 @@
             ],
             [
                 null,
-                null,
-                null,
-                null,
+                "start",
+                "battery",
+                "bulb",
                 null
             ],
             [
                 null,
-                "start",
                 null,
                 null,
+                "resistor",
                 null
             ],
             [
@@ -263,16 +289,35 @@
                 "ground",
                 "ground",
                 "ground",
+                "ground",
+                "ground"
+            ],
+            [
+                "ground",
+                "path",
+                "path",
+                "ground",
+                "ground",
                 "ground"
             ],
             [
                 "ground",
                 "ground",
+                "path",
                 "ground",
                 "ground",
                 "ground"
             ],
             [
+                "ground",
+                "ground",
+                "path",
+                "ground",
+                "ground",
+                "ground"
+            ],
+            [
+                "ground",
                 "ground",
                 "path",
                 "path",
@@ -281,12 +326,6 @@
             ],
             [
                 "ground",
-                "ground",
-                "ground",
-                "ground",
-                "ground"
-            ],
-            [
                 "ground",
                 "ground",
                 "ground",
@@ -300,30 +339,43 @@
                 null,
                 null,
                 null,
-                null
-            ],
-            [
-                null,
-                null,
-                null,
                 null,
                 null
             ],
             [
                 null,
                 "start",
+                "bulb",
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
                 "obstacle",
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
+                "battery",
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
+                null,
+                "bulb",
                 "finish",
                 null
             ],
             [
                 null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
                 null,
                 null,
                 null,
@@ -354,14 +406,6 @@
             [
                 "ground",
                 "ground",
-                "ground",
-                "ground",
-                "ground",
-                "ground"
-            ],
-            [
-                "ground",
-                "path",
                 "path",
                 "path",
                 "path",
@@ -370,7 +414,7 @@
             [
                 "ground",
                 "ground",
-                "ground",
+                "path",
                 "ground",
                 "ground",
                 "ground"
@@ -378,7 +422,15 @@
             [
                 "ground",
                 "ground",
+                "path",
                 "ground",
+                "ground",
+                "ground"
+            ],
+            [
+                "ground",
+                "path",
+                "path",
                 "ground",
                 "ground",
                 "ground"
@@ -404,15 +456,7 @@
             [
                 null,
                 null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                "start",
-                "key",
+                "battery",
                 "lock",
                 "finish",
                 null
@@ -420,7 +464,7 @@
             [
                 null,
                 null,
-                null,
+                "bulb",
                 null,
                 null,
                 null
@@ -428,7 +472,15 @@
             [
                 null,
                 null,
+                "key",
                 null,
+                null,
+                null
+            ],
+            [
+                null,
+                "start",
+                "bulb",
                 null,
                 null,
                 null
@@ -523,9 +575,9 @@
             ],
             [
                 null,
+                "battery",
                 null,
-                null,
-                null,
+                "bulb",
                 null,
                 null
             ],
@@ -540,7 +592,7 @@
             [
                 null,
                 null,
-                null,
+                "voltmeter",
                 "obstacle",
                 null,
                 null
@@ -637,6 +689,14 @@
                 null,
                 null,
                 null,
+                "bulb",
+                null
+            ],
+            [
+                null,
+                "battery",
+                null,
+                null,
                 null,
                 null
             ],
@@ -644,15 +704,7 @@
                 null,
                 null,
                 null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                null,
-                null,
-                null,
+                "ammeter",
                 null,
                 null
             ],
@@ -757,18 +809,18 @@
                 null,
                 "start",
                 null,
-                null,
+                "resistor",
                 null,
                 "key",
                 null
             ],
             [
                 null,
+                "battery",
                 null,
+                "bulb",
                 null,
-                null,
-                null,
-                null,
+                "resistor",
                 null
             ],
             [
@@ -776,7 +828,7 @@
                 null,
                 "obstacle",
                 null,
-                null,
+                "voltmeter",
                 null,
                 null
             ],
