@@ -1,8 +1,8 @@
 // src/CircuitModal.tsx
 import React, { useEffect, useRef } from 'react';
 import './CircuitModal.css';
-import { CircuitGraph } from '../../../circuit-simulator/src/logic/circuit_graph';
-import { CircuitVisuals } from '../../../circuit-simulator/src/logic/circuit_visuals';
+import { CircuitGraph } from '../../src/circuit/logic/circuit_graph';
+import { CircuitVisuals } from '../../src/circuit/logic/circuit_visuals';
 
 interface CircuitModalProps {
   isOpen: boolean;

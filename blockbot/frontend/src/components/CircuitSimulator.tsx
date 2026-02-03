@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Phaser from 'phaser';
 
-import MenuScene from '../../../src/circuit/scenes/menuScene';
-import LabScene from '../../../src/circuit/scenes/labScene';
 import LoginScene from '../../../src/circuit/scenes/loginScene';
 import ScoreboardScene from '../../../src/circuit/scenes/scoreboardScene';
 import LevelScene from '../../../src/circuit/scenes/levelScene';
@@ -29,8 +27,6 @@ export default function CircuitSimulator({ inventory = [], onClose }: CircuitSim
         backgroundColor: '#f4f6fa',
         parent: gameContainerRef.current,
         scene: [
-          MenuScene,
-          LabScene,
           WorkspaceScene,
           LevelScene,
           LoginScene,
