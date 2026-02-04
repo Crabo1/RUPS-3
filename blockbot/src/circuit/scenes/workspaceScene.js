@@ -34,6 +34,7 @@ export default class WorkspaceScene extends Phaser.Scene {
     this.load.image('žica', '/circuit/components/wire.svg');
     this.load.image('ampermeter', '/circuit/components/ammeter.svg');
     this.load.image('voltmeter', '/circuit/components/voltmeter.svg');
+    this.load.image('background', '/background.svg')
   }
 
   create() {
@@ -45,16 +46,15 @@ export default class WorkspaceScene extends Phaser.Scene {
     // Get inventory from registry (passed from React)
     const blockbotInventory = this.registry.get('blockbotInventory') || [];
     console.log('Circuit scene received inventory:', blockbotInventory);
-    
+
     // Wires are always available
     const alwaysAvailable = ['žica'];
     this.enabledComponents = [...new Set([...blockbotInventory, ...alwaysAvailable])];
     console.log('Enabled components:', this.enabledComponents);
 
-    const desk = this.add.rectangle(0, 0, width, height, 0xe0c9a6).setOrigin(0);
-
+    const desk = this.add.image(0, 0, 'background').setOrigin(0).setDisplaySize(width, height).setAlpha(0.4);
     const gridGraphics = this.add.graphics();
-    gridGraphics.lineStyle(1, 0x8b7355, 0.35);
+    gridGraphics.lineStyle(1, 0x00b3a4 , 0.8);
     const gridSize = 40;
     for (let x = 0; x < width; x += gridSize) {
       gridGraphics.beginPath();
@@ -77,6 +77,8 @@ export default class WorkspaceScene extends Phaser.Scene {
     infoBox.setStrokeStyle(2, 0xffffff);
     const infoText = this.add.text(0, 0, '', {
       fontSize: '14px',
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+      resolution: 2,
       color: '#ffffff',
       align: 'left',
       wordWrap: { width: 180 }
@@ -157,6 +159,8 @@ export default class WorkspaceScene extends Phaser.Scene {
 
     this.promptText = this.add.text(width / 1.8, height - 30,
       this.circuitChallenges[this.currentChallengeIndex]?.prompt || 'Sestavi električni krog', {
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+      resolution: 2,
       fontSize: '20px',
       color: '#333',
       fontStyle: 'bold',
@@ -165,6 +169,8 @@ export default class WorkspaceScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     this.checkText = this.add.text(width / 2, height - 70, '', {
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+      resolution: 2,
       fontSize: '18px',
       color: '#cc0000',
       fontStyle: 'bold',
@@ -177,23 +183,24 @@ export default class WorkspaceScene extends Phaser.Scene {
 
     const makeButton = (x, y, label, onClick) => {
       const bg = this.add.graphics();
-      bg.fillStyle(0x3399ff, 1);
+      bg.fillStyle(0x00b3a4, 1);
       bg.fillRoundedRect(x - buttonWidth / 2, y - buttonHeight / 2, buttonWidth, buttonHeight, cornerRadius);
 
       const text = this.add.text(x, y, label, {
-        fontFamily: 'Arial',
+        fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+        resolution: 2,
         fontSize: '20px',
         color: '#ffffff'
       }).setOrigin(0.5)
         .setInteractive({ useHandCursor: true })
         .on('pointerover', () => {
           bg.clear();
-          bg.fillStyle(0x0f5cad, 1);
+          bg.fillStyle(0x00998c, 1);
           bg.fillRoundedRect(x - buttonWidth / 2, y - buttonHeight / 2, buttonWidth, buttonHeight, cornerRadius);
         })
         .on('pointerout', () => {
           bg.clear();
-          bg.fillStyle(0x3399ff, 1);
+          bg.fillStyle(0x00b3a4, 1);
           bg.fillRoundedRect(x - buttonWidth / 2, y - buttonHeight / 2, buttonWidth, buttonHeight, cornerRadius);
         })
         .on('pointerdown', onClick);
@@ -201,16 +208,17 @@ export default class WorkspaceScene extends Phaser.Scene {
       return { bg, text };
     };
 
-    makeButton(width - 140, 110, 'Izbira levela', () => this.scene.start('LevelScene'));
-    makeButton(width - 140, 160, 'Preveri krog', () => this.checkCircuit());
-    makeButton(width - 140, 210, 'Namig', () => this.showHint());
+    makeButton(width - 140, 110, 'Preveri krog', () => this.checkCircuit());
+    makeButton(width - 140, 160, 'Namig', () => this.showHint());
 
     const panelWidth = 150;
-    this.add.rectangle(0, 0, panelWidth, height, 0xc0c0c0).setOrigin(0);
+    this.add.rectangle(0, 0, panelWidth, height, 0x00998c).setOrigin(0);
     this.add.rectangle(0, 0, panelWidth, height, 0x000000, 0.2).setOrigin(0);
 
     this.add.text(panelWidth / 2, 60, 'Komponente', {
       fontSize: '18px',
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+      resolution: 2,
       color: '#ffffff',
       fontStyle: 'bold'
     }).setOrigin(0.5);
@@ -241,6 +249,8 @@ export default class WorkspaceScene extends Phaser.Scene {
 
     this.add.text(width / 2 + 50, 30, 'Povleci komponente na mizo in zgradi svoj električni krog!', {
       fontSize: '20px',
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+      resolution: 2,
       color: '#333',
       fontStyle: 'bold',
       align: 'center',
@@ -568,16 +578,18 @@ export default class WorkspaceScene extends Phaser.Scene {
     });
 
     const label = this.add.text(0, 45, type, {
-      fontSize: '11px',
+      fontSize: '13px',
       color: '#fff',
       backgroundColor: '#00000088',
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif', 
+      resolution: 2,
       padding: { x: 4, y: 2 },
     }).setOrigin(0.5);
     component.add(label);
     component.setData('label', label);
 
     component.setSize(70, 70);
-    
+
     // Only make component interactive if enabled
     if (isEnabled) {
       component.setInteractive({ draggable: true, useHandCursor: true });
@@ -870,6 +882,8 @@ export default class WorkspaceScene extends Phaser.Scene {
 
       const hintText = this.add.text(this.cameras.main.width / 2, 100, `Namig: ${randomHint}`, {
         fontSize: '18px',
+        fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+        resolution: 2,
         color: '#ffcc00',
         backgroundColor: '#000000aa',
         padding: { x: 15, y: 10 }
@@ -925,6 +939,8 @@ export default class WorkspaceScene extends Phaser.Scene {
     this.theoryText = this.add.text(width / 2, height / 2, theoryText, {
       fontSize: '16px',
       color: '#ffffff',
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+      resolution: 2,
       fontStyle: 'bold',
       align: 'center',
       wordWrap: { width: width - 150 }
@@ -934,6 +950,8 @@ export default class WorkspaceScene extends Phaser.Scene {
 
     this.continueButton = this.add.text(width / 2, height / 2 + 70, 'Nadaljuj', {
       fontSize: '18px',
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+      resolution: 2,
       color: '#0066ff',
       backgroundColor: '#ffffff',
       padding: { x: 20, y: 10 }
@@ -964,3 +982,41 @@ export default class WorkspaceScene extends Phaser.Scene {
     }
   }
 }
+
+const config = {
+  type: Phaser.WEBGL,  
+  width: window.innerWidth,
+  height: window.innerHeight,
+  parent: 'game-container',
+  backgroundColor: '#f8fafc',  
+  
+  pixelArt: false,
+  antialias: true,
+  roundPixels: false,
+  
+  scale: {
+    mode: Phaser.Scale.RESIZE,
+    autoCenter: Phaser.Scale.CENTER_BOTH
+  },
+  
+  render: {
+    pixelArt: false,
+    antialias: true,
+    roundPixels: false,
+    transparent: false,
+    clearBeforeRender: true,
+    preserveDrawingBuffer: false,
+    premultipliedAlpha: true,
+    failIfMajorPerformanceCaveat: false,
+    powerPreference: 'high-performance'
+  },
+  
+  scene: [WorkspaceScene],
+  
+  physics: {
+    default: 'arcade',
+    arcade: {
+      debug: false
+    }
+  }
+};

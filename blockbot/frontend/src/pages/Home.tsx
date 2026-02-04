@@ -19,7 +19,7 @@ export default function Home() {
           <div className="flex flex-col gap-4">
             <h1 className="text-6xl font-bold text-gray-800">Zdravo!</h1>
             <p className="text-3xl text-gray-700">
-              Si me pripravljen naučiti programirati?
+              Nauči se programirati in sestavljati električne kroge!
             </p>
           </div>
           <Link to={user ? '/game' : '/auth?mode=login'}>
