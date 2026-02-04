@@ -2,7 +2,7 @@
     {
         "index": 1,
         "name": "Prvi koraki",
-        "description": "Spoznaj osnove programiranja! Uporabi ukaz 'premakni se naprej' za dosego cilja.",
+        "description": "Spoznaj osnove programiranja in hkrati poberi svetilko in baterijo.",
         "actions": [
             "forward",
             "pickup"
@@ -111,10 +111,11 @@
     {
         "index": 2,
         "name": "Zaporedje ukazov",
-        "description": "Programi izvajajo ukaze po vrsti. Sestavi zaporedje: premik in zavoj levo.",
+        "description": "Programi izvajajo ukaze po vrsti. Sestavi zaporedje premikov in istočasno poberi predmete za sestavo električnega kroga.",
         "actions": [
             "forward",
             "turnLeft",
+            "turnRight",
             "pickup"
         ],
         "levelMatrix": [
@@ -144,14 +145,14 @@
                 "path",
                 "path",
                 "path",
-                "ground"
+                "path"
             ],
             [
                 "ground",
-                "ground",
-                "ground",
-                "ground",
-                "ground"
+                "path",
+                "path",
+                "path",
+                "path"
             ]
         ],
         "objectsMatrix": [
@@ -179,14 +180,14 @@
             [
                 null,
                 "start",
-                "battery",
-                "bulb",
-                null
+                null,
+                null,
+                "bulb"
             ],
             [
                 null,
                 null,
-                null,
+                "battery",
                 null,
                 null
             ]
@@ -195,9 +196,10 @@
     {
         "index": 3,
         "name": "Smeri v kodi",
-        "description": "Nauči se upravljati s smerjo. Kombiniraj premik in zavoj desno.",
+        "description": "Kombiniraj premike smeri in poberi elemente električnega kroga.",
         "actions": [
             "forward",
+            "turnLeft",
             "turnRight",
             "pickup"
         ],
@@ -218,21 +220,21 @@
             ],
             [
                 "ground",
+                "path",
+                "path",
+                "path",
+                "ground"
+            ],
+            [
                 "ground",
+                "path",
                 "ground",
                 "path",
                 "ground"
             ],
             [
                 "ground",
-                "ground",
-                "ground",
                 "path",
-                "ground"
-            ],
-            [
-                "ground",
-                "ground",
                 "ground",
                 "ground",
                 "ground"
@@ -257,7 +259,7 @@
                 null,
                 null,
                 null,
-                "resistor",
+                null,
                 null
             ],
             [
@@ -269,7 +271,7 @@
             ],
             [
                 null,
-                null,
+                "resistor",
                 null,
                 null,
                 null
@@ -279,7 +281,7 @@
     {
         "index": 4,
         "name": "Pogojno izvajanje",
-        "description": "Ko naletimo na oviro, moramo izvesti poseben ukaz - skok. Razširi svoj algoritem!",
+        "description": "Ko naletimo na oviro, moramo izvesti poseben ukaz - skok. S spretnim premikanjem poberi še ostale elemente!",
         "actions": [
             "forward",
             "turnLeft",
@@ -300,8 +302,8 @@
                 "ground",
                 "path",
                 "path",
-                "ground",
-                "ground",
+                "path",
+                "path",
                 "ground"
             ],
             [
@@ -309,7 +311,7 @@
                 "ground",
                 "path",
                 "ground",
-                "ground",
+                "path",
                 "ground"
             ],
             [
@@ -317,7 +319,7 @@
                 "ground",
                 "path",
                 "ground",
-                "ground",
+                "path",
                 "ground"
             ],
             [
@@ -349,7 +351,7 @@
             [
                 null,
                 "start",
-                "bulb",
+                null,
                 null,
                 null,
                 null
@@ -359,7 +361,7 @@
                 null,
                 "obstacle",
                 null,
-                null,
+                "bulb",
                 null
             ],
             [
@@ -391,7 +393,7 @@
     {
         "index": 5,
         "name": "Delo s spremenljivkami",
-        "description": "Ključ deluje kot spremenljivka v programu. Najprej ga pridobi, nato uporabi za odklepanje.",
+        "description": "Ključ deluje kot spremenljivka v programu. Najprej pridobi ključ in potrebne elemente za električni krog, nato uporabi ključ za odklepanje.",
         "actions": [
             "forward",
             "turnLeft",
@@ -428,8 +430,8 @@
                 "ground",
                 "ground",
                 "path",
-                "ground",
-                "ground",
+                "path",
+                "path",
                 "ground"
             ],
             [
@@ -437,15 +439,15 @@
                 "path",
                 "path",
                 "ground",
-                "ground",
+                "path",
                 "ground"
             ],
             [
                 "ground",
-                "ground",
-                "ground",
-                "ground",
-                "ground",
+                "path",
+                "path",
+                "path",
+                "path",
                 "ground"
             ]
         ],
@@ -461,7 +463,7 @@
             [
                 null,
                 null,
-                "battery",
+                "bulb",
                 "lock",
                 "finish",
                 null
@@ -469,7 +471,7 @@
             [
                 null,
                 null,
-                "bulb",
+                null,
                 null,
                 null,
                 null
@@ -477,15 +479,15 @@
             [
                 null,
                 null,
+                null,
+                null,
                 "key",
-                null,
-                null,
                 null
             ],
             [
                 null,
                 "start",
-                "bulb",
+                "battery",
                 null,
                 null,
                 null
@@ -495,7 +497,7 @@
                 null,
                 null,
                 null,
-                null,
+                "bulb",
                 null
             ]
         ]
@@ -503,7 +505,7 @@
     {
         "index": 6,
         "name": "Prvo potovanje",
-        "description": "Združi vse naučene ukaze v daljši program. Načrtuj pot korak za korakom.",
+         "description": "Združi vse naučene ukaze v daljši program in poberi potrebne elemente električnega kroga.",
         "actions": [
             "forward",
             "turnLeft",
@@ -527,23 +529,7 @@
                 "ground",
                 "path",
                 "path",
-                "ground"
-            ],
-            [
-                "ground",
-                "path",
-                "ground",
-                "path",
-                "ground",
-                "ground"
-            ],
-            [
-                "ground",
-                "path",
-                "ground",
-                "path",
-                "ground",
-                "ground"
+                "path"
             ],
             [
                 "ground",
@@ -551,7 +537,23 @@
                 "path",
                 "path",
                 "ground",
-                "ground"
+                "path"
+            ],
+            [
+                "ground",
+                "path",
+                "ground",
+                "path",
+                "ground",
+                "path"
+            ],
+            [
+                "ground",
+                "path",
+                "path",
+                "path",
+                "path",
+                "path"
             ],
             [
                 "ground",
@@ -589,11 +591,11 @@
             ],
             [
                 null,
-                "key",
                 null,
                 null,
                 null,
-                null
+                null,
+                "key"
             ],
             [
                 null,
@@ -616,7 +618,7 @@
     {
         "index": 7,
         "name": "Uvod v zanke",
-        "description": "Namesto ponavljanja enakih ukazov uporabi zanko 'repeat'. Programiraj pametneje!",
+         "description": "Namesto ponavljanja enakih ukazov uporabi zanko 'repeat' in si olajšaj pot pobiranja elementov do cilja.",
         "actions": [
             "forward",
             "turnLeft",
@@ -644,8 +646,8 @@
             [
                 "ground",
                 "path",
-                "ground",
-                "ground",
+                "path",
+                "path",
                 "path",
                 "ground"
             ],
@@ -728,7 +730,7 @@
     {
         "index": 8,
         "name": "Optimizacija kode",
-        "description": "Uporabi zanke in vse ukaze za najučinkovitejšo rešitev. Pokaži svoje znanje!",
+        "description": "Smiselno uporabi vse ukaze za najučinkovitejšo rešitev.",
         "actions": [
             "forward",
             "turnLeft",
@@ -767,7 +769,7 @@
                 "ground"
             ],
             [
-                "ground",
+                "path",
                 "path",
                 "path",
                 "path",
@@ -776,21 +778,21 @@
                 "ground"
             ],
             [
-                "ground",
+                "path",
                 "ground",
                 "ground",
                 "path",
                 "ground",
-                "ground",
+                "path",
                 "ground"
             ],
             [
-                "ground",
-                "ground",
-                "ground",
                 "path",
-                "ground",
-                "ground",
+                "path",
+                "path",
+                "path",
+                "path",
+                "path",
                 "ground"
             ],
             [
@@ -817,7 +819,7 @@
                 null,
                 "start",
                 null,
-                "resistor",
+                null,
                 null,
                 "key",
                 null
@@ -826,7 +828,7 @@
                 null,
                 "battery",
                 null,
-                "bulb",
+                null,
                 null,
                 "resistor",
                 null
@@ -846,13 +848,13 @@
                 null,
                 "lock",
                 null,
-                null,
+                "bulb",
                 null
             ],
             [
+                "resistor",
                 null,
-                null,
-                null,
+                "obstacle",
                 "finish",
                 null,
                 null,
