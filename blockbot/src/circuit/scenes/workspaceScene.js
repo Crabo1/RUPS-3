@@ -208,9 +208,8 @@ export default class WorkspaceScene extends Phaser.Scene {
       return { bg, text };
     };
 
-    makeButton(width - 140, 110, 'Izbira levela', () => this.scene.start('LevelScene'));
-    makeButton(width - 140, 160, 'Preveri krog', () => this.checkCircuit());
-    makeButton(width - 140, 210, 'Namig', () => this.showHint());
+    makeButton(width - 140, 110, 'Preveri krog', () => this.checkCircuit());
+    makeButton(width - 140, 160, 'Namig', () => this.showHint());
 
     const panelWidth = 150;
     this.add.rectangle(0, 0, panelWidth, height, 0x0891b2).setOrigin(0);
