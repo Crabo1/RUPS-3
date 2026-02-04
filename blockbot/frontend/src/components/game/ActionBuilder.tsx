@@ -329,7 +329,7 @@ export function ActionBuilder({
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
   );
 
-  const MAX_ACTIONS = 20;
+  const MAX_ACTIONS = 30;
 
   const totalActionsCount = actions.reduce((total, action) => {
     if (typeof action === 'object' && action.type === 'loop') {

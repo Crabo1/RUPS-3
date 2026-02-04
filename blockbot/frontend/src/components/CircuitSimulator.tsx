@@ -6,12 +6,22 @@ import ScoreboardScene from '../../../src/circuit/scenes/scoreboardScene';
 import LevelScene from '../../../src/circuit/scenes/levelScene';
 import WorkspaceScene from '../../../src/circuit/scenes/workspaceScene';
 
+interface CircuitChallenge {
+  prompt: string;
+  requiredComponents: string[];
+  availableComponents: string[];
+  theory?: string[];
+  hints?: string[];
+}
+
 interface CircuitSimulatorProps {
   inventory?: string[];
+  challenge?: CircuitChallenge;
+  levelIndex?: number;
   onClose?: () => void;
 }
 
-export default function CircuitSimulator({ inventory = [], onClose }: CircuitSimulatorProps) {
+export default function CircuitSimulator({ inventory = [], challenge, levelIndex = 0, onClose }: CircuitSimulatorProps) {
   const gameContainerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | null>(null);
   const [error, setError] = useState<string>('');
@@ -50,27 +60,20 @@ export default function CircuitSimulator({ inventory = [], onClose }: CircuitSim
       
       // Pass inventory to the game if needed
       if (gameRef.current.registry) {
-        // Map blockbot inventory names to circuit component names
-        const componentMapping: Record<string, string> = {
-          'bulb': 'svetilka',
-          'lamp': 'svetilka',
-          'battery': 'baterija',
-          'resistor': 'upor',
-          'switch': 'stikalo',
-          'ammeter': 'ampermeter',
-          'voltmeter': 'voltmeter'
-        };
+        gameRef.current.registry.set('blockbotInventory', inventory);
+        gameRef.current.registry.set('blockbotLevelIndex', levelIndex);
         
-        const mappedInventory = inventory.map(item => 
-          componentMapping[item] || item
-        );
-        
-        gameRef.current.registry.set('blockbotInventory', mappedInventory);
-        console.log('Inventory passed to circuit:', mappedInventory);
+        if (challenge) {
+          gameRef.current.registry.set('circuitChallenge', {
+            prompt: challenge.prompt,
+            availableComponents: challenge.availableComponents,
+            theory: challenge.theory,
+            hints: challenge.hints
+          });
+        }
       }
-
-      console.log('Circuit game initialized successfully');
-
+      console.log('Circuit initialized - Inventory:', inventory, 'Challenge:', challenge);
+      
     } catch (err) {
       console.error('Error initializing circuit:', err);
       setError(err instanceof Error ? err.message : 'Unknown error');

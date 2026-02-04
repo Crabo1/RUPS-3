@@ -8,6 +8,7 @@ import { GameControls } from './GameControls';
 import { useGameCompletion } from '../../hooks/useGameCompletion';
 import type { Level, GameAction, GameState, Direction } from '../../types/game';
 import CircuitSimulator from '../CircuitSimulator';
+import { getChallengeForLevel } from '../../CircuitChallenges';
 
 interface GamePlayProps {
   level: Level;
@@ -62,7 +63,6 @@ export function GamePlay({
   const handleExecute = async () => {
     setIsExecuting(true);
     const delay = 1000 / executionSpeed;
-    console.log('Execution speed:', executionSpeed, 'Delay:', delay);
 
     const finalState = await executeActions(level, actions, (state) => {
       setResult({ ...state });
@@ -70,7 +70,6 @@ export function GamePlay({
     setIsExecuting(false);
 
     if (finalState.isFailed) {
-      // Check if it's a missing components failure
       const isMissingComponents = finalState.moveLog.some(
         log => log.includes('missing components')
       );
@@ -81,13 +80,13 @@ export function GamePlay({
         setIsDead(true);
         await new Promise((resolve) => setTimeout(resolve, delay));
         setIsDead(false);
-
         await new Promise((resolve) => setTimeout(resolve, delay));
         setResult(null);
         rotationRef.current = 90;
         lastDirectionRef.current = 'right';
       }
     } else if (finalState.isComplete) {
+      // Confetti animation
       const confetti = () => {
         const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
         for (let i = 0; i < 150; i++) {
@@ -105,10 +104,7 @@ export function GamePlay({
 
           const angle = Math.random() * Math.PI * 2;
           const velocity = 5 + Math.random() * 10;
-          let x = 0,
-            y = 0,
-            vy = -velocity;
-
+          let x = 0, y = 0, vy = -velocity;
           const gravity = 0.9;
 
           const animate = () => {
@@ -159,6 +155,8 @@ export function GamePlay({
     onNextLevel();
   };
 
+  const circuitChallenge = getChallengeForLevel(level.index);
+
   return (
     <div className="relative z-0 flex h-[calc(100vh-64px)] items-center justify-center p-8">
       <div
@@ -208,49 +206,74 @@ export function GamePlay({
             onSpeedChange={setExecutionSpeed}
           />
 
-          {result && (
-            <>
-              {result.isComplete && (
-                <Modal
-                  show={showWinModal}
-                  size="md"
-                  onClose={() => setShowWinModal(false)}
-                  popup
-                >
-                  <ModalHeader />
-                  <ModalBody>
-                    <div className="text-center">
-                      <h3 className="mb-5 text-2xl font-bold text-gray-900">
-                        Čestitke!
-                      </h3>
-                      <p className="mb-5 text-base text-gray-500">
-                        Uspešno si zaključil stopnjo {level.index}!
-                      </p>
-                      <div className="flex flex-col gap-3">
-                        {hasNextLevel && (
-                          <Button onClick={handleNextLevel}>
-                            Nadaljuj na naslednjo stopnjo
-                          </Button>
-                        )}
-                        <Button color="alternative" onClick={onBack}>
-                          Nazaj na izbiro stopenj
-                        </Button>
-                        <Button color="purple" onClick={() => setShowCircuit(true)}
-                        >
-                          Odpri Circuit Simulator
-                        </Button>
-                      </div>            
-                      {showCircuit && (
-                        <CircuitSimulator 
-                          inventory={result?.inventory || []} 
-                          onClose={() => setShowCircuit(false)} 
-                        />
-                      )}
+          {result && result.isComplete && (
+            <Modal
+              show={showWinModal}
+              size="md"
+              onClose={() => setShowWinModal(false)}
+              popup
+            >
+              <ModalHeader />
+              <ModalBody>
+                <div className="text-center">
+                  <h3 className="mb-5 text-2xl font-bold text-gray-900">
+                    Čestitke!
+                  </h3>
+                  <p className="mb-4 text-base text-gray-700">
+                    Uspešno si zaključil stopnjo {level.index}!
+                  </p>
+                  
+                  {result.inventory && result.inventory.length > 0 && (
+                    <div className="mb-5 bg-blue-50 rounded-lg p-4">
+                      <p className="font-semibold text-gray-900 mb-2">Pobrane komponente:</p>
+                      <div className="flex flex-wrap justify-center gap-2">
+                        {result.inventory.map((item, i) => (
+                          <span key={i} className="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </ModalBody>
-                </Modal>
-              )}
-            </>
+                  )}
+
+                  {circuitChallenge && (
+                    <div className="mb-5 bg-purple-50 rounded-lg p-4">
+                      <p className="font-semibold text-purple-900 mb-2">Naloga:</p>
+                      <p className="text-purple-800 text-sm">{circuitChallenge.prompt}</p>
+                    </div>
+                  )}
+
+                  <div className="flex flex-col gap-3">
+                    <Button 
+                      color="purple" 
+                      onClick={() => setShowCircuit(true)}
+                      className="font-bold"
+                    >
+                      Sestavi električni krog
+                    </Button>
+                    
+                    {hasNextLevel && (
+                      <Button onClick={handleNextLevel}>
+                        Nadaljuj na naslednjo stopnjo
+                      </Button>
+                    )}
+                    
+                    <Button color="alternative" onClick={onBack}>
+                      Nazaj na izbiro stopenj
+                    </Button>
+                  </div>
+                  
+                  {showCircuit && circuitChallenge && (
+                    <CircuitSimulator 
+                      inventory={result?.inventory || []} 
+                      challenge={circuitChallenge}
+                      levelIndex={level.index}
+                      onClose={() => setShowCircuit(false)} 
+                    />
+                  )}
+                </div>
+              </ModalBody>
+            </Modal>
           )}
 
           <Modal
@@ -273,16 +296,26 @@ export function GamePlay({
                 <p className="mb-4 text-base text-gray-700">
                   Nisi pobral vseh potrebnih komponent pred dosegom cilja.
                 </p>
-                {result && (
-                  <div className="mb-5 text-left">
-                    <p className="mb-2 font-semibold text-gray-900">Pobrane komponente:</p>
-                    <ul className="list-inside list-disc text-gray-600">
-                      {result.inventory.length > 0 ? (
-                        result.inventory.map((item, i) => <li key={i}>{item}</li>)
-                      ) : (
-                        <li className="text-gray-400">Nič</li>
-                      )}
-                    </ul>
+                {result && circuitChallenge && (
+                  <div className="mb-5">
+                    <div className="mb-4 text-left bg-gray-50 rounded-lg p-4">
+                      <p className="mb-2 font-semibold text-gray-900">Potrebne:</p>
+                      <ul className="list-inside list-disc text-gray-600">
+                        {circuitChallenge.requiredComponents.map((item, i) => (
+                          <li key={i}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="text-left bg-gray-50 rounded-lg p-4">
+                      <p className="mb-2 font-semibold text-gray-900">Pobrane:</p>
+                      <ul className="list-inside list-disc text-gray-600">
+                        {result.inventory.length > 0 ? (
+                          result.inventory.map((item, i) => <li key={i}>{item}</li>)
+                        ) : (
+                          <li className="text-gray-400">Nič</li>
+                        )}
+                      </ul>
+                    </div>
                   </div>
                 )}
                 <Button

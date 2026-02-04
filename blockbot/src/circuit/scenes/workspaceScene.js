@@ -39,12 +39,22 @@ export default class WorkspaceScene extends Phaser.Scene {
   create() {
     const { width, height } = this.cameras.main;
 
+    const blockbotChallenge = null;
+    const blockbotInventory = [];
+    const blockbotLevelIndex = 0;
+  
+    try {
+      if (this.registry) {
+        blockbotChallenge = this.registry.get('circuitChallenge');
+        blockbotInventory = this.registry.get('blockbotInventory') || [];
+        blockbotLevelIndex = this.registry.get('blockbotLevelIndex') || 0;
+      }
+    } catch (error) {
+      console.error('Error reading registry:', error);
+    }
+
     this.circuitVisuals = new CircuitVisuals(this);
     this.currentFlowAnim = new CurrentFlowAnimation(this);
-
-    // Get inventory from registry (passed from React)
-    const blockbotInventory = this.registry.get('blockbotInventory') || [];
-    console.log('Circuit scene received inventory:', blockbotInventory);
     
     // Wires are always available
     const alwaysAvailable = ['žica'];
@@ -155,8 +165,12 @@ export default class WorkspaceScene extends Phaser.Scene {
       }
     ];
 
-    this.promptText = this.add.text(width / 1.8, height - 30,
-      this.circuitChallenges[this.currentChallengeIndex]?.prompt || 'Sestavi električni krog', {
+    // Use blockbot challenge prompt if available, otherwise use default circuit challenges
+    const promptToShow = blockbotChallenge 
+      ? blockbotChallenge.prompt 
+      : (this.circuitChallenges[this.currentChallengeIndex]?.prompt || 'Sestavi električni krog');
+    
+    this.promptText = this.add.text(width / 1.8, height - 30, promptToShow, {
       fontSize: '20px',
       color: '#333',
       fontStyle: 'bold',
@@ -217,6 +231,18 @@ export default class WorkspaceScene extends Phaser.Scene {
     const startY = 100;
     const spacing = 90;
 
+    /*let availableToolboxComponents;
+    
+    if (blockbotChallenge && blockbotChallenge.availableComponents) {
+      // Use components from blockbot challenge
+      availableToolboxComponents = blockbotChallenge.availableComponents;
+      console.log('Using blockbot available components:', availableToolboxComponents);
+    } else {
+      // Default: show all components
+      availableToolboxComponents = ['baterija', 'upor', 'svetilka', 'stikalo', 'žica', 'voltmeter', 'ampermeter'];
+    }
+    
+    // Define all possible palette items*/
     const paletteItems = [
       { type: 'baterija', color: 0xffcc00 },
       { type: 'upor', color: 0xff6600 },
@@ -226,6 +252,13 @@ export default class WorkspaceScene extends Phaser.Scene {
       { type: 'ampermeter', color: 0x00cc66 },
       { type: 'voltmeter', color: 0x00cc66 },
     ];
+    
+    // Filter to only show available components
+    /*const paletteItems = allPaletteItems.filter(item => 
+      availableToolboxComponents.includes(item.type)
+    );
+    
+    console.log('Filtered palette items:', paletteItems);*/
 
     paletteItems.forEach((item, index) => {
       const isEnabled = this.enabledComponents.length === 0 || this.enabledComponents.includes(item.type);
@@ -863,10 +896,19 @@ export default class WorkspaceScene extends Phaser.Scene {
   }
 
   showHint() {
-    const currentChallenge = this.circuitChallenges[this.currentChallengeIndex];
-    if (currentChallenge.hints) {
-      const randomHint = currentChallenge.hints[Math.floor(Math.random() * currentChallenge.hints.length)];
-
+    const blockbotChallenge = this.registry.get('circuitChallenge');
+  
+    let hints;
+    if (blockbotChallenge && blockbotChallenge.hints) {
+      hints = blockbotChallenge.hints;
+    } else {
+      const currentChallenge = this.circuitChallenges[this.currentChallengeIndex];
+      hints = currentChallenge?.hints;
+    }
+    
+    if (hints && hints.length > 0) {
+      const randomHint = hints[Math.floor(Math.random() * hints.length)];
+  
       const hintText = this.add.text(this.cameras.main.width / 2, 100, `Namig: ${randomHint}`, {
         fontSize: '18px',
         color: '#ffcc00',
@@ -916,6 +958,12 @@ export default class WorkspaceScene extends Phaser.Scene {
 
   showTheory(theoryText) {
     const { width, height } = this.cameras.main;
+    const blockbotChallenge = this.registry.get('circuitChallenge');
+  
+    let theoryToShow = theoryText;
+    if (blockbotChallenge && blockbotChallenge.theory) {
+      theoryToShow = blockbotChallenge.theory;
+    }
 
     this.theoryBack = this.add.rectangle(width / 2, height / 2, width + 100, 150, 0x000000, 0.8)
       .setOrigin(0.5)
