@@ -24,7 +24,7 @@ export interface Queries {
     getLevels(): Promise<Level[] | null>;
     getLevel(levelId: number): Promise<Level | null>;
     createLevel(name: string, description: string, level: string, pos: number, level_matrix: string[][], object_matrix: string[][], actions: string[]): Promise<Level>;
-    createChallenge(challenger_id: number, challengee_id: number): Promise<any>;
+    createChallenge(challenger_id: number, challengee_id: number, difficulty: string): Promise<any>;
     getUserChallenges(userId: number): Promise<any[]>;
     getChallengeById(id: number): Promise<any>;
     updateUserStars(userId: number, stars: number): Promise<User>;
@@ -329,12 +329,12 @@ export const makeQueries = (databaseUrl: string): Queries => {
                 throw error;
             }
         },
-        createChallenge: async (challenger_id: number, challengee_id: number) => {
+        createChallenge: async (challenger_id: number, challengee_id: number, difficulty: string) => {
             const result = await pool.query(
-                `INSERT INTO challenges (challenger_id, challengee_id)
-                VALUES ($1, $2)
+                `INSERT INTO challenges (challenger_id, challengee_id, difficulty)
+                VALUES ($1, $2, $3)
                 RETURNING id, challenger_id, challengee_id`,
-                [challenger_id, challengee_id]
+                [challenger_id, challengee_id, difficulty]
             );
             return result.rows[0];
         },

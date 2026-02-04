@@ -7,6 +7,7 @@ export type Challenge = {
   challengee_id: number;
   challenger_username: string;
   challengee_username: string;
+  difficulty?: 'easy' | 'medium' | 'hard';
   accepted: boolean;
 };
 
