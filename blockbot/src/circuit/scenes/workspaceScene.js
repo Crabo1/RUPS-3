@@ -34,6 +34,7 @@ export default class WorkspaceScene extends Phaser.Scene {
     this.load.image('žica', '/circuit/components/wire.svg');
     this.load.image('ampermeter', '/circuit/components/ammeter.svg');
     this.load.image('voltmeter', '/circuit/components/voltmeter.svg');
+    this.load.image('background', '/background.svg')
   }
 
   create() {
@@ -51,10 +52,9 @@ export default class WorkspaceScene extends Phaser.Scene {
     this.enabledComponents = [...new Set([...blockbotInventory, ...alwaysAvailable])];
     console.log('Enabled components:', this.enabledComponents);
 
-    const desk = this.add.rectangle(0, 0, width, height, 0xf0f0f0).setOrigin(0);
-
+    const desk = this.add.image(0, 0, 'background').setOrigin(0).setDisplaySize(width, height).setAlpha(0.4);
     const gridGraphics = this.add.graphics();
-    gridGraphics.lineStyle(1, 0x0891b2, 0.7);
+    gridGraphics.lineStyle(1, 0x00b3a4 , 0.8);
     const gridSize = 40;
     for (let x = 0; x < width; x += gridSize) {
       gridGraphics.beginPath();
@@ -183,7 +183,7 @@ export default class WorkspaceScene extends Phaser.Scene {
 
     const makeButton = (x, y, label, onClick) => {
       const bg = this.add.graphics();
-      bg.fillStyle(0x3399ff, 1);
+      bg.fillStyle(0x00b3a4, 1);
       bg.fillRoundedRect(x - buttonWidth / 2, y - buttonHeight / 2, buttonWidth, buttonHeight, cornerRadius);
 
       const text = this.add.text(x, y, label, {
@@ -195,12 +195,12 @@ export default class WorkspaceScene extends Phaser.Scene {
         .setInteractive({ useHandCursor: true })
         .on('pointerover', () => {
           bg.clear();
-          bg.fillStyle(0x0f5cad, 1);
+          bg.fillStyle(0x00998c, 1);
           bg.fillRoundedRect(x - buttonWidth / 2, y - buttonHeight / 2, buttonWidth, buttonHeight, cornerRadius);
         })
         .on('pointerout', () => {
           bg.clear();
-          bg.fillStyle(0x3399ff, 1);
+          bg.fillStyle(0x00b3a4, 1);
           bg.fillRoundedRect(x - buttonWidth / 2, y - buttonHeight / 2, buttonWidth, buttonHeight, cornerRadius);
         })
         .on('pointerdown', onClick);
@@ -212,7 +212,7 @@ export default class WorkspaceScene extends Phaser.Scene {
     makeButton(width - 140, 160, 'Namig', () => this.showHint());
 
     const panelWidth = 150;
-    this.add.rectangle(0, 0, panelWidth, height, 0x0891b2).setOrigin(0);
+    this.add.rectangle(0, 0, panelWidth, height, 0x00998c).setOrigin(0);
     this.add.rectangle(0, 0, panelWidth, height, 0x000000, 0.2).setOrigin(0);
 
     this.add.text(panelWidth / 2, 60, 'Komponente', {
@@ -578,9 +578,11 @@ export default class WorkspaceScene extends Phaser.Scene {
     });
 
     const label = this.add.text(0, 45, type, {
-      fontSize: '11px',
+      fontSize: '13px',
       color: '#fff',
       backgroundColor: '#00000088',
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif', 
+      resolution: 2,
       padding: { x: 4, y: 2 },
     }).setOrigin(0.5);
     component.add(label);
