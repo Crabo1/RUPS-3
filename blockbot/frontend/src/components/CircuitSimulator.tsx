@@ -50,7 +50,23 @@ export default function CircuitSimulator({ inventory = [], onClose }: CircuitSim
       
       // Pass inventory to the game if needed
       if (gameRef.current.registry) {
-        gameRef.current.registry.set('blockbotInventory', inventory);
+        // Map blockbot inventory names to circuit component names
+        const componentMapping: Record<string, string> = {
+          'bulb': 'svetilka',
+          'lamp': 'svetilka',
+          'battery': 'baterija',
+          'resistor': 'upor',
+          'switch': 'stikalo',
+          'ammeter': 'ampermeter',
+          'voltmeter': 'voltmeter'
+        };
+        
+        const mappedInventory = inventory.map(item => 
+          componentMapping[item] || item
+        );
+        
+        gameRef.current.registry.set('blockbotInventory', mappedInventory);
+        console.log('Inventory passed to circuit:', mappedInventory);
       }
 
       console.log('Circuit game initialized successfully');

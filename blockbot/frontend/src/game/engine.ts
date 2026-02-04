@@ -124,6 +124,34 @@ function moveForward(
   const pickedUpKey = obj === 'key';
   const reachedFinish = obj === 'finish';
 
+  // Check if all required components were collected
+  if (reachedFinish) {
+    const requiredComponents: ObjectType[] = ['bulb', 'ammeter', 'battery', 'resistor', 'switch', 'voltmeter'];
+    const allComponents = level.objectsMatrix
+      .flat()
+      .filter(item => requiredComponents.includes(item as ObjectType));
+    
+    if (allComponents.length > 0) {
+      const missingComponents = allComponents.filter(
+        component => !state.inventory.includes(component as string)
+      );
+      
+      if (missingComponents.length > 0) {
+        soundManager.play('fail');
+        return {
+          ...state,
+          playerPosition: newPos,
+          isJumping: false,
+          isFailed: true,
+          moveLog: [
+            ...state.moveLog,
+            `Reached finish but missing components: ${missingComponents.join(', ')}`,
+          ],
+        };
+      }
+    }
+  }
+
   const objectsMatrix = pickedUpKey
     ? state.objectsMatrix.map((row) => [...row])
     : state.objectsMatrix;
