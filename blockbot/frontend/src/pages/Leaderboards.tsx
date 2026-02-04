@@ -262,7 +262,7 @@ export default function Leaderboards() {
       >
         <div className="p-8">
           <div className="text-center">
-            <h3 className="mb-5 text-lg font-normal text-gray-500">
+            <h3 className="mb-5 text-lg font-normal text-black">
               Izberite težavnost izziva za <span className="font-bold text-teal-600">{selectedUser}</span>
             </h3>
             <div className="flex flex-col gap-3">
@@ -271,21 +271,21 @@ export default function Leaderboards() {
                 onClick={() => selectedUser && sendChallenge(selectedUser, 'easy')}
                 className="text-lg font-semibold"
               >
-                😊 Enostavno (Easy)
+                ☺️ Enostavno ☺️
               </Button>
               <Button
                 color="warning"
                 onClick={() => selectedUser && sendChallenge(selectedUser, 'medium')}
                 className="text-lg font-semibold"
               >
-                😐 Srednje (Medium)
+                🤨 Srednje 🤨  
               </Button>
               <Button
                 color="failure"
                 onClick={() => selectedUser && sendChallenge(selectedUser, 'hard')}
                 className="text-lg font-semibold"
               >
-                😤 Težko (Hard)
+                😤 Težko 😤
               </Button>
             </div>
             <Button
@@ -319,10 +319,11 @@ export default function Leaderboards() {
               <h3 className="text-lg text-center mb-4">
                 <span className="font-bold text-teal-600">{activeChallenge?.challenger_username || "Neznan"}</span> te izziva na dvoboj
               </h3>
+              
               <div className="bg-teal-50 border border-teal-200 rounded-lg px-4 py-3 mb-6 flex items-center gap-2">
                 <span className="text-teal-600">⚠️</span>
-                <p className="text-sm text-teal-700">
-                  <p>Težavnost: {activeChallenge?.difficulty}</p>
+                <p className="text-sm text-teal-700 text-center">
+                  <p>Težavnost: <b>{activeChallenge?.difficulty}</b></p>
                   Zvezdice izgubi poraženec - več pravilnih odgovorov = večja kazen za nasprotnika!
                 </p>
               </div>

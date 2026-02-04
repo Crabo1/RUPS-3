@@ -165,7 +165,7 @@ const MEDIUM_QUESTIONS: QuizQuestion[] = [
     },
     {
         "id": 23,
-        "question": "Tokovi v posameznik vejah so v ____________ z njihovimi upornostmi?",
+        "question": "Tokovi v posameznih vejah so v ____________ z njihovimi upornostmi?",
         "options": [
             "Obratnem sorazmerju",
             "Premem sorazmerju"
@@ -589,19 +589,37 @@ export default function QuizChallenge({
         onFinishQuiz(finalScore, selectedAnswers, questions.length);
     };
 
-    const calculateStarImpact = () => {
-        const halfQuestions = Math.ceil(questions.length / 2);
-        const answerDifference = Math.abs(score - (questions.length - score));
-
-        if (score >= halfQuestions) {
-            if (answerDifference <= 1) return 10;
-            if (answerDifference <= 3) return 20;
-            return 30;
+const calculateStarImpact = () => {
+    const halfQuestions = Math.ceil(questions.length / 2);
+    const answerDifference = Math.abs(score - (questions.length - score));
+    
+    let baseStars = 0;
+    if (score >= halfQuestions) {
+        if (answerDifference <= 1) {
+            baseStars = 5;
+        } else if (answerDifference < 3) {
+            baseStars = 10;
         } else {
-            if (answerDifference <= 1) return 20;
-            return 30;
+            baseStars = 15;
         }
+    } else {
+        if (answerDifference <= 1) {
+            baseStars = 10;
+        } else {
+            baseStars = 15;
+        }
+    }
+
+    const difficultyMultiplier: Record<'easy' | 'medium' | 'hard', number> = {
+        'easy': 1,
+        'medium': 1.5,
+        'hard': 2
     };
+    
+    const multiplier = difficultyMultiplier[difficulty];
+    return Math.round(baseStars * multiplier);
+};
+    
 
     if (quizFinished) {
         const halfQuestions = Math.ceil(questions.length / 2);
