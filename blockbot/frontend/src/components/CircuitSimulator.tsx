@@ -57,7 +57,7 @@ export default function CircuitSimulator({ inventory = [], onClose }: CircuitSim
           'battery': 'baterija',
           'resistor': 'upor',
           'switch': 'stikalo',
-          'ammeter': 'ampermeter',
+          'ammeter': 'amperometer',
           'voltmeter': 'voltmeter'
         };
         

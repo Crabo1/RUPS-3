@@ -9,6 +9,19 @@ import { useGameCompletion } from '../../hooks/useGameCompletion';
 import type { Level, GameAction, GameState, Direction } from '../../types/game';
 import CircuitSimulator from '../CircuitSimulator';
 
+const componentNameMap: Record<string, string> = {
+  'bulb': 'svetilka',
+  'ammeter': 'amperometer',
+  'battery': 'baterija',
+  'resistor': 'upor',
+  'switch': 'stikalo',
+  'voltmeter': 'voltmeter'
+};
+
+const getComponentName = (name: string): string => {
+  return componentNameMap[name] || name;
+};
+
 interface GamePlayProps {
   level: Level;
   onBack: () => void;
@@ -278,7 +291,7 @@ export function GamePlay({
                     <p className="mb-2 font-semibold text-gray-900">Pobrane komponente:</p>
                     <ul className="list-inside list-disc text-gray-600">
                       {result.inventory.length > 0 ? (
-                        result.inventory.map((item, i) => <li key={i}>{item}</li>)
+                        result.inventory.map((item, i) => <li key={i}>{getComponentName(item)}</li>)
                       ) : (
                         <li className="text-gray-400">Nič</li>
                       )}

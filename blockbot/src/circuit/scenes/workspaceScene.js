@@ -224,7 +224,7 @@ export default class WorkspaceScene extends Phaser.Scene {
       { type: 'svetilka', color: 0xff0000 },
       { type: 'stikalo', color: 0x666666 },
       { type: 'žica', color: 0x0066cc },
-      { type: 'ampermeter', color: 0x00cc66 },
+      { type: 'amperometer', color: 0x00cc66 },
       { type: 'voltmeter', color: 0x00cc66 },
     ];
 
@@ -332,7 +332,7 @@ export default class WorkspaceScene extends Phaser.Scene {
       'svetilka': 'Upornost: 100 Ω\nPretvarja v svetlobo',
       'stikalo': 'Stanje: ZAPRTO\nDovoljuje tok\nStanje: ODPRTO\nPrepreči tok',
       'žica': 'Upornost: 1 Ω\nPovezuje komponente',
-      'ampermeter': 'Meri električni tok\nEnota: amperi (A)',
+      'amperometer': 'Meri električni tok\nEnota: amperi (A)',
       'voltmeter': 'Meri napetost\nEnota: volti (V)'
     };
     return details[type] || 'Komponenta';
@@ -511,7 +511,7 @@ export default class WorkspaceScene extends Phaser.Scene {
         component.setData('logicComponent', comp);
         break;
 
-      case 'ampermeter':
+      case 'amperometer':
         id = "ammeter_" + this.getRandomInt(1000, 9999);
         comp = new Ammeter(
           id,
