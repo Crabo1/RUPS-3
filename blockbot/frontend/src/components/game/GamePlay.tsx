@@ -10,6 +10,19 @@ import type { Level, GameAction, GameState, Direction } from '../../types/game';
 import CircuitSimulator from '../CircuitSimulator';
 import { getChallengeForLevel } from '../../CircuitChallenges';
 
+const componentNameMap: Record<string, string> = {
+  'bulb': 'svetilka',
+  'ammeter': 'amperometer',
+  'battery': 'baterija',
+  'resistor': 'upor',
+  'switch': 'stikalo',
+  'voltmeter': 'voltmeter'
+};
+
+const getComponentName = (name: string): string => {
+  return componentNameMap[name] || name;
+};
+
 interface GamePlayProps {
   level: Level;
   onBack: () => void;

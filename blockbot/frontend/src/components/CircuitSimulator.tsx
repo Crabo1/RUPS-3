@@ -62,6 +62,16 @@ export default function CircuitSimulator({ inventory = [], challenge, levelIndex
       if (gameRef.current.registry) {
         gameRef.current.registry.set('blockbotInventory', inventory);
         gameRef.current.registry.set('blockbotLevelIndex', levelIndex);
+        // Map blockbot inventory names to circuit component names
+        /*const componentMapping: Record<string, string> = {
+          'bulb': 'svetilka',
+          'lamp': 'svetilka',
+          'battery': 'baterija',
+          'resistor': 'upor',
+          'switch': 'stikalo',
+          'ammeter': 'amperometer',
+          'voltmeter': 'voltmeter'
+        };*/
         
         if (challenge) {
           gameRef.current.registry.set('circuitChallenge', {
@@ -73,7 +83,7 @@ export default function CircuitSimulator({ inventory = [], challenge, levelIndex
         }
       }
       console.log('Circuit initialized - Inventory:', inventory, 'Challenge:', challenge);
-      
+
     } catch (err) {
       console.error('Error initializing circuit:', err);
       setError(err instanceof Error ? err.message : 'Unknown error');
