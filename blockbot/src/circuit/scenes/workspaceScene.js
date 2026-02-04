@@ -42,6 +42,15 @@ export default class WorkspaceScene extends Phaser.Scene {
     this.circuitVisuals = new CircuitVisuals(this);
     this.currentFlowAnim = new CurrentFlowAnimation(this);
 
+    // Get inventory from registry (passed from React)
+    const blockbotInventory = this.registry.get('blockbotInventory') || [];
+    console.log('Circuit scene received inventory:', blockbotInventory);
+    
+    // Wires are always available
+    const alwaysAvailable = ['žica'];
+    this.enabledComponents = [...new Set([...blockbotInventory, ...alwaysAvailable])];
+    console.log('Enabled components:', this.enabledComponents);
+
     const desk = this.add.rectangle(0, 0, width, height, 0xe0c9a6).setOrigin(0);
 
     const gridGraphics = this.add.graphics();
@@ -219,11 +228,13 @@ export default class WorkspaceScene extends Phaser.Scene {
     ];
 
     paletteItems.forEach((item, index) => {
+      const isEnabled = this.enabledComponents.length === 0 || this.enabledComponents.includes(item.type);
       this.createComponent(
         panelWidth / 2,
         startY + index * spacing,
         item.type,
-        item.color
+        item.color,
+        isEnabled
       );
     });
 
@@ -399,7 +410,7 @@ export default class WorkspaceScene extends Phaser.Scene {
     }
   }
 
-  createComponent(x, y, type, color) {
+  createComponent(x, y, type, color, isEnabled = true) {
     const component = this.add.container(x, y);
 
     let comp = null;
@@ -543,7 +554,9 @@ export default class WorkspaceScene extends Phaser.Scene {
         this.infoWindow.y = y;
         this.infoWindow.setVisible(true);
       }
-      component.setScale(1.1);
+      if (isEnabled) {
+        component.setScale(1.1);
+      }
     });
 
     component.on('pointerout', () => {
@@ -563,7 +576,19 @@ export default class WorkspaceScene extends Phaser.Scene {
     component.setData('label', label);
 
     component.setSize(70, 70);
-    component.setInteractive({ draggable: true, useHandCursor: true });
+    
+    // Only make component interactive if enabled
+    if (isEnabled) {
+      component.setInteractive({ draggable: true, useHandCursor: true });
+      this.input.setDraggable(component);
+    } else {
+      // Visual feedback for disabled components
+      component.setAlpha(0.3);
+      const lockIcon = this.add.text(0, 0, '🔒', {
+        fontSize: '24px'
+      }).setOrigin(0.5);
+      component.add(lockIcon);
+    }
 
     component.setData('originalX', x);
     component.setData('originalY', y);
@@ -571,23 +596,25 @@ export default class WorkspaceScene extends Phaser.Scene {
     component.setData('color', color);
     component.setData('isInPanel', true);
     component.setData('rotation', 0);
+    component.setData('isEnabled', isEnabled);
     if (comp) component.setData('logicComponent', comp);
     component.setData('isDragging', false);
     component.setData('componentId', id);
 
-    this.input.setDraggable(component);
-
     component.on('dragstart', () => {
+      if (!component.getData('isEnabled')) return;
       component.setData('isDragging', true);
       this.checkText.setText('');
     });
 
     component.on('drag', (pointer, dragX, dragY) => {
+      if (!component.getData('isEnabled')) return;
       component.x = dragX;
       component.y = dragY;
     });
 
     component.on('dragend', () => {
+      if (!component.getData('isEnabled')) return;
       component.setData('isDragging', false);
       const isInPanel = component.x < 200;
 
@@ -621,7 +648,8 @@ export default class WorkspaceScene extends Phaser.Scene {
           component.getData('originalX'),
           component.getData('originalY'),
           component.getData('type'),
-          component.getData('color')
+          component.getData('color'),
+          component.getData('isEnabled')
         );
 
         this.placedComponents.push(component);

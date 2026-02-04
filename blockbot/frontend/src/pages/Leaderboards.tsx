@@ -16,6 +16,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { type LeaderboardRow } from '@/hooks/useLeaderboard';
 import QuizChallenge from './Quiz';
 
+const CHALLENGE_COOLDOWN_MS = 10 * 60 * 1000;
+
 export default function Leaderboards() {
   const { leaderboardRows, isLoadingRows, rowsError, refetch: refetchLeaderboard } = useLeaderboard();
   const { user } = useAuth();
@@ -24,6 +26,8 @@ export default function Leaderboards() {
   const [activeChallenge, setActiveChallenge] = useState<Challenge | null>(null);
   const [showChallengeModal, setShowChallengeModal] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [showDifficultyModal, setShowDifficultyModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
   // const [starChanges, setStarChanges] = useState<{ [key: string]: number }>({});
   const [updatedLeaderboard, setUpdatedLeaderboard] = useState<LeaderboardRow[]>([]);
@@ -36,7 +40,13 @@ export default function Leaderboards() {
     localStorage.setItem('handledChallenges', JSON.stringify(Array.from(handledChallenges)));
   }, [handledChallenges]);
 
-  const sendChallenge = async (challengeeUsername: string) => {
+
+  const handleChallengeClick = (username: string) => {
+    setSelectedUser(username);
+    setShowDifficultyModal(true);
+  };
+
+  const sendChallenge = async (challengeeUsername: string, difficulty: 'easy' | 'medium' | 'hard') => {
     try {
       const token = localStorage.getItem('token');
       if (!token) return alert('Niste prijavljeni!');
@@ -47,18 +57,22 @@ export default function Leaderboards() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ challengee_username: challengeeUsername }),
+        body: JSON.stringify({ challengee_username: challengeeUsername, difficulty: difficulty }),
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Napaka pri pošiljanju izziva');
 
       console.log('Challenge sent:', data);
+      console.log("difficulty:", difficulty);
+      setShowDifficultyModal(false);  
+      setSelectedUser(null);
       await refetchChallenges();
     } catch (error) {
       console.error('Error sending challenge:', error);
     }
   };
+
 
 
   useEffect(() => {
@@ -211,13 +225,21 @@ export default function Leaderboards() {
                             </span>
                           ) : (
                             <Button
-                              size="md"
-                              color="light"
-                              className="text-[#0F2F2C] text-xl font-bold hover:scale-105 transition-transform"
-                              onClick={() => sendChallenge(row.user)}
-                            >
-                              ⚔️ Izzovi
-                            </Button>
+                                size="md"
+                                color="light"
+                                className="text-[#0F2F2C] text-xl font-bold hover:scale-105 transition-transform"
+                                onClick={() => handleChallengeClick(row.user)}
+                              >
+                                ⚔️ Izzovi
+                              </Button>
+                            // <Button
+                            //   size="md"
+                            //   color="light"
+                            //   className="text-[#0F2F2C] text-xl font-bold hover:scale-105 transition-transform"
+                            //   onClick={() => sendChallenge(row.user)}
+                            // >
+                            //   ⚔️ Izzovi
+                            // </Button>
                           )}
                         </TableCell>
                       </TableRow>
@@ -229,6 +251,56 @@ export default function Leaderboards() {
           )}
         </div>
       </div>
+      <Modal
+        show={showDifficultyModal}
+        size="md"
+        popup
+        onClose={() => {
+          setShowDifficultyModal(false);
+          setSelectedUser(null);
+        }}
+      >
+        <div className="p-8">
+          <div className="text-center">
+            <h3 className="mb-5 text-lg font-normal text-black">
+              Izberite težavnost izziva za <span className="font-bold text-teal-600">{selectedUser}</span>
+            </h3>
+            <div className="flex flex-col gap-3">
+              <Button
+                color="success"
+                onClick={() => selectedUser && sendChallenge(selectedUser, 'easy')}
+                className="text-lg font-semibold"
+              >
+                ☺️ Enostavno ☺️
+              </Button>
+              <Button
+                color="warning"
+                onClick={() => selectedUser && sendChallenge(selectedUser, 'medium')}
+                className="text-lg font-semibold"
+              >
+                🤨 Srednje 🤨  
+              </Button>
+              <Button
+                color="failure"
+                onClick={() => selectedUser && sendChallenge(selectedUser, 'hard')}
+                className="text-lg font-semibold"
+              >
+                😤 Težko 😤
+              </Button>
+            </div>
+            <Button
+              color="gray"
+              onClick={() => {
+                setShowDifficultyModal(false);
+                setSelectedUser(null);
+              }}
+              className="mt-4"
+            >
+              Prekliči
+            </Button>
+          </div>
+        </div>
+      </Modal>
       <Modal
         show={showChallengeModal}
         size="xl"
@@ -247,9 +319,11 @@ export default function Leaderboards() {
               <h3 className="text-lg text-center mb-4">
                 <span className="font-bold text-teal-600">{activeChallenge?.challenger_username || "Neznan"}</span> te izziva na dvoboj
               </h3>
+              
               <div className="bg-teal-50 border border-teal-200 rounded-lg px-4 py-3 mb-6 flex items-center gap-2">
                 <span className="text-teal-600">⚠️</span>
-                <p className="text-sm text-teal-700">
+                <p className="text-sm text-teal-700 text-center">
+                  <p>Težavnost: <b>{activeChallenge?.difficulty}</b></p>
                   Zvezdice izgubi poraženec - več pravilnih odgovorov = večja kazen za nasprotnika!
                 </p>
               </div>
@@ -265,6 +339,7 @@ export default function Leaderboards() {
           ) : (
             <QuizChallenge
               challengerUsername={activeChallenge?.challenger_username || "Neznan"}
+              difficulty={activeChallenge?.difficulty}
               onFinishQuiz={handleFinishQuiz}
               onCancel={() => {
                 setShowQuiz(false);

@@ -8,13 +8,43 @@ import {
   Dropdown,
   DropdownHeader,
   DropdownItem,
+  Badge
 } from 'flowbite-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useUserChallenge } from '../hooks/useChallenge';
+import { useEffect, useState } from 'react';
 
 export default function NavbarComponent() {
   const location = useLocation();
   const { user, logout, isLoading } = useAuth();
+    const { challenges } = useUserChallenge();
+  const userName = user?.username || 'Guest';
+  const [pendingChallengesCount, setPendingChallengesCount] = useState(0);
+  const [handledChallenges, setHandledChallenges] = useState<Set<number>>(() => {
+    const saved = localStorage.getItem('handledChallenges');
+    return saved ? new Set(JSON.parse(saved)) : new Set();
+  });
+
+  useEffect(() => {
+    localStorage.setItem('handledChallenges', JSON.stringify(Array.from(handledChallenges)));
+  }, [handledChallenges]);
+
+  useEffect(() => {
+    if (!userName || userName === 'Guest' || !challenges) {
+      setPendingChallengesCount(0);
+      return;
+    }
+
+    const pending = challenges.filter(
+      (c) =>
+        c.challengee_username === userName &&
+        !c.accepted &&
+        !handledChallenges.has(c.id)
+    );
+
+    setPendingChallengesCount(pending.length);
+  }, [challenges, userName, handledChallenges]);
 
   return (
     <Navbar fluid rounded className="z-50 mb-0">
@@ -74,9 +104,21 @@ export default function NavbarComponent() {
           <NavbarLink active={location.pathname === '/game'}>Igra</NavbarLink>
         </Link>
         <Link to="/leaderboards">
-          <NavbarLink active={location.pathname === '/leaderboards'}>
-            Lestvica
-          </NavbarLink>
+          <div className="flex items-center gap-2">
+            <NavbarLink active={location.pathname === '/leaderboards'}>
+              Lestvica
+            </NavbarLink>
+            {pendingChallengesCount > 0 && (
+              <Badge
+                color="warning"
+                size="sm"
+                className="text-sm text-yellow-600 font-medium animate-pulse "
+                style={{ animation: 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}
+              >
+                    Čaka te {pendingChallengesCount} izziv{pendingChallengesCount > 1 ? 'ov' : ''}!
+              </Badge>
+            )}
+          </div>
         </Link>
       </NavbarCollapse>
     </Navbar>

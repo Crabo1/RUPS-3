@@ -33,6 +33,7 @@ export function GamePlay({
   const [executionSpeed, setExecutionSpeed] = useState(1);
   const [actionHistory, setActionHistory] = useState<GameAction[][]>([]);
   const [showCircuit, setShowCircuit] = useState(false);
+  const [showMissingComponentsModal, setShowMissingComponentsModal] = useState(false);
 
   const MAX_ACTIONS = 20;
 
@@ -69,14 +70,23 @@ export function GamePlay({
     setIsExecuting(false);
 
     if (finalState.isFailed) {
-      setIsDead(true);
-      await new Promise((resolve) => setTimeout(resolve, delay));
-      setIsDead(false);
+      // Check if it's a missing components failure
+      const isMissingComponents = finalState.moveLog.some(
+        log => log.includes('missing components')
+      );
+      
+      if (isMissingComponents) {
+        setShowMissingComponentsModal(true);
+      } else {
+        setIsDead(true);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        setIsDead(false);
 
-      await new Promise((resolve) => setTimeout(resolve, delay));
-      setResult(null);
-      rotationRef.current = 90;
-      lastDirectionRef.current = 'right';
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        setResult(null);
+        rotationRef.current = 90;
+        lastDirectionRef.current = 'right';
+      }
     } else if (finalState.isComplete) {
       const confetti = () => {
         const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
@@ -231,7 +241,10 @@ export function GamePlay({
                         </Button>
                       </div>            
                       {showCircuit && (
-                        <CircuitSimulator onClose={() => setShowCircuit(false)} />
+                        <CircuitSimulator 
+                          inventory={result?.inventory || []} 
+                          onClose={() => setShowCircuit(false)} 
+                        />
                       )}
                     </div>
                   </ModalBody>
@@ -239,6 +252,53 @@ export function GamePlay({
               )}
             </>
           )}
+
+          <Modal
+            show={showMissingComponentsModal}
+            size="md"
+            onClose={() => {
+              setShowMissingComponentsModal(false);
+              setResult(null);
+              rotationRef.current = 90;
+              lastDirectionRef.current = 'right';
+            }}
+            popup
+          >
+            <ModalHeader />
+            <ModalBody>
+              <div className="text-center">
+                <h3 className="mb-5 text-2xl font-bold text-red-600">
+                  Manjkajoče komponente!
+                </h3>
+                <p className="mb-4 text-base text-gray-700">
+                  Nisi pobral vseh potrebnih komponent pred dosegom cilja.
+                </p>
+                {result && (
+                  <div className="mb-5 text-left">
+                    <p className="mb-2 font-semibold text-gray-900">Pobrane komponente:</p>
+                    <ul className="list-inside list-disc text-gray-600">
+                      {result.inventory.length > 0 ? (
+                        result.inventory.map((item, i) => <li key={i}>{item}</li>)
+                      ) : (
+                        <li className="text-gray-400">Nič</li>
+                      )}
+                    </ul>
+                  </div>
+                )}
+                <Button
+                  onClick={() => {
+                    setShowMissingComponentsModal(false);
+                    setResult(null);
+                    rotationRef.current = 90;
+                    lastDirectionRef.current = 'right';
+                  }}
+                  color="failure"
+                >
+                  Poskusi ponovno
+                </Button>
+              </div>
+            </ModalBody>
+          </Modal>
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import { AuthRequest } from '../middleware/auth';
 
 interface ChallengeRequestBody {
     challengee_username: string;
+    difficulty?: 'easy' | 'medium' | 'hard';
 }
 
 export interface ChallengeController {
@@ -21,14 +22,14 @@ export const makeChallengeController = ({ queries }: AppContext): ChallengeContr
             try {
                 if (!req.userId) return next(new HttpError(401, 'Unauthorized'));
 
-                const { challengee_username } = req.body as { challengee_username: string };
+                const { challengee_username, difficulty = 'medium' } = req.body as ChallengeRequestBody;
                 if (!challengee_username) return next(new HttpError(400, 'Missing challengee_username'));
 
 
                 const challengeeUser = await queries.getUserByUsername(challengee_username);
                 if (!challengeeUser) return next(new HttpError(404, 'Challengee not found'));
 
-                const newChallenge = await queries.createChallenge(req.userId, challengeeUser.id);
+                const newChallenge = await queries.createChallenge(req.userId, challengeeUser.id, difficulty);
 
                 res.status(201).json({
                     success: true,
@@ -36,9 +37,12 @@ export const makeChallengeController = ({ queries }: AppContext): ChallengeContr
                         id: newChallenge.id,
                         challenger_username: req.userId,
                         challengee_username: challengee_username,
+                        difficulty: difficulty
                     },
                     message: `Challenge created: ${req.userId} → ${challengee_username}`,
                 });
+
+
             } catch (error: any) {
                 next(new HttpError(500, error.message));
             }
@@ -59,6 +63,7 @@ export const makeChallengeController = ({ queries }: AppContext): ChallengeContr
                     challengee_id: challenge.challengee_id,
                     challenger_username: challenge.challenger_username,
                     challengee_username: challenge.challengee_username,
+                    difficulty: challenge.difficulty || 'medium',
                     display: `${challenge.challenger_username} → ${challenge.challengee_username}`
                 }));
 
@@ -93,7 +98,7 @@ export const makeChallengeController = ({ queries }: AppContext): ChallengeContr
 
                 const challengerId = challenge.challenger_id;
                 const challengeeId = challenge.challengee_id;
-
+                const difficulty: 'easy' | 'medium' | 'hard' = challenge.difficulty || 'medium';
                 const halfQuestions = Math.ceil(totalQuestions / 2);
                 const correctAnswers = score;
                 const wrongAnswers = totalQuestions - score;
@@ -109,11 +114,11 @@ export const makeChallengeController = ({ queries }: AppContext): ChallengeContr
                     winnerUserId = challengeeId;
 
                     if (answerDifference <= 1) {
-                        starsToDeduct = 10;
+                        starsToDeduct = 5;
                     } else if (answerDifference < 3) {
-                        starsToDeduct = 20;
+                        starsToDeduct = 10;
                     } else {
-                        starsToDeduct = 30;
+                        starsToDeduct = 15;
                     }
                     resultMessage = `Challengee won with ${score}/${totalQuestions}. Challenger loses ${starsToDeduct} stars.`;
                 } else {
@@ -121,13 +126,22 @@ export const makeChallengeController = ({ queries }: AppContext): ChallengeContr
                     winnerUserId = challengerId;
 
                     if (answerDifference <= 1) {
-                        starsToDeduct = 20;
+                        starsToDeduct = 10;
                     } else {
-                        starsToDeduct = 30;
+                        starsToDeduct = 15;
                     }
                     resultMessage = `Challenger won. Challengee scored ${score}/${totalQuestions} and loses ${starsToDeduct} stars.`;
                 }
 
+
+                const difficultyMultiplier = {
+                    'easy': 1,
+                    'medium': 1.5,
+                    'hard': 2
+                };
+
+                const multiplier = difficultyMultiplier[difficulty] || 1;
+                starsToDeduct = Math.round(starsToDeduct * multiplier);
 
                 const starsDeducted = await queries.deductStarsFromLevels(loserUserId, starsToDeduct);
 
@@ -142,6 +156,7 @@ export const makeChallengeController = ({ queries }: AppContext): ChallengeContr
                     loser_user_id: loserUserId,
                     stars_deducted: starsDeducted,
                     total_stars: totalStarsNow,
+                    difficulty: difficulty,
                     leaderboard: data
                 });
 
