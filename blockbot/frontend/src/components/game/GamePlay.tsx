@@ -12,15 +12,33 @@ import { getChallengeForLevel } from '../../CircuitChallenges';
 
 const componentNameMap: Record<string, string> = {
   'bulb': 'svetilka',
-  'ammeter': 'amperometer',
+  'ammeter': 'ampermeter',
   'battery': 'baterija',
   'resistor': 'upor',
   'switch': 'stikalo',
   'voltmeter': 'voltmeter'
 };
 
+const componentDisplayNameMap: Record<string, string> = {
+  'bulb': 'Svetilka',
+  'ammeter': 'Ampermeter',
+  'battery': 'Baterija',
+  'resistor': 'Upor',
+  'switch': 'Stikalo',
+  'voltmeter': 'Voltmeter',
+  'svetilka': 'Svetilka',
+  'ampermeter': 'Ampermeter',
+  'baterija': 'Baterija',
+  'upor': 'Upor',
+  'stikalo': 'Stikalo'
+};
+
 const getComponentName = (name: string): string => {
   return componentNameMap[name] || name;
+};
+
+const getDisplayName = (name: string): string => {
+  return componentDisplayNameMap[name] || name;
 };
 
 interface GamePlayProps {
@@ -242,7 +260,7 @@ export function GamePlay({
                       <div className="flex flex-wrap justify-center gap-2">
                         {result.inventory.map((item, i) => (
                           <span key={i} className="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                            {item}
+                            {getDisplayName(item)}
                           </span>
                         ))}
                       </div>
@@ -278,7 +296,7 @@ export function GamePlay({
                   
                   {showCircuit && circuitChallenge && (
                     <CircuitSimulator 
-                      inventory={result?.inventory || []} 
+                      inventory={(result?.inventory || []).map(item => getComponentName(item))} 
                       challenge={circuitChallenge}
                       levelIndex={level.index}
                       onClose={() => setShowCircuit(false)} 
@@ -315,7 +333,7 @@ export function GamePlay({
                       <p className="mb-2 font-semibold text-gray-900">Potrebne:</p>
                       <ul className="list-inside list-disc text-gray-600">
                         {circuitChallenge.requiredComponents.map((item, i) => (
-                          <li key={i}>{item}</li>
+                          <li key={i}>{getDisplayName(item)}</li>
                         ))}
                       </ul>
                     </div>
@@ -323,7 +341,7 @@ export function GamePlay({
                       <p className="mb-2 font-semibold text-gray-900">Pobrane:</p>
                       <ul className="list-inside list-disc text-gray-600">
                         {result.inventory.length > 0 ? (
-                          result.inventory.map((item, i) => <li key={i}>{item}</li>)
+                          result.inventory.map((item, i) => <li key={i}>{getDisplayName(item)}</li>)
                         ) : (
                           <li className="text-gray-400">Nič</li>
                         )}

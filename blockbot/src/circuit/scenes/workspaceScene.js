@@ -41,7 +41,7 @@ export default class WorkspaceScene extends Phaser.Scene {
     const { width, height } = this.cameras.main;
 
     const blockbotChallenge = null;
-    const blockbotInventory = [];
+    // const blockbotInventory = [];
     const blockbotLevelIndex = 0;
   
     try {
@@ -262,7 +262,7 @@ export default class WorkspaceScene extends Phaser.Scene {
       { type: 'svetilka', color: 0xff0000 },
       { type: 'stikalo', color: 0x666666 },
       { type: 'žica', color: 0x0066cc },
-      { type: 'amperometer', color: 0x00cc66 },
+      { type: 'ampermeter', color: 0x00cc66 },
       { type: 'voltmeter', color: 0x00cc66 },
     ];
     
@@ -275,6 +275,7 @@ export default class WorkspaceScene extends Phaser.Scene {
 
     paletteItems.forEach((item, index) => {
       const isEnabled = this.enabledComponents.length === 0 || this.enabledComponents.includes(item.type);
+      console.log(`Component ${item.type}: enabled=${isEnabled}, in enabledComponents=${this.enabledComponents.includes(item.type)}`);
       this.createComponent(
         panelWidth / 2,
         startY + index * spacing,
@@ -379,10 +380,23 @@ export default class WorkspaceScene extends Phaser.Scene {
       'svetilka': 'Upornost: 100 Ω\nPretvarja v svetlobo',
       'stikalo': 'Stanje: ZAPRTO\nDovoljuje tok\nStanje: ODPRTO\nPrepreči tok',
       'žica': 'Upornost: 1 Ω\nPovezuje komponente',
-      'amperometer': 'Meri električni tok\nEnota: amperi (A)',
+      'ampermeter': 'Meri električni tok\nEnota: amperi (A)',
       'voltmeter': 'Meri napetost\nEnota: volti (V)'
     };
     return details[type] || 'Komponenta';
+  }
+
+  getComponentDisplayName(type) {
+    const displayNames = {
+      'baterija': 'Baterija',
+      'upor': 'Upor',
+      'svetilka': 'Svetilka',
+      'stikalo': 'Stikalo',
+      'žica': 'Žica',
+      'ampermeter': 'Ampermeter',
+      'voltmeter': 'Voltmeter'
+    };
+    return displayNames[type] || type;
   }
 
   snapToGrid(x, y) {
@@ -558,7 +572,7 @@ export default class WorkspaceScene extends Phaser.Scene {
         component.setData('logicComponent', comp);
         break;
 
-      case 'amperometer':
+      case 'ampermeter':
         id = "ammeter_" + this.getRandomInt(1000, 9999);
         comp = new Ammeter(
           id,
@@ -611,10 +625,12 @@ export default class WorkspaceScene extends Phaser.Scene {
       if (component.getData('isInPanel')) {
         this.infoWindow.setVisible(false);
       }
-      component.setScale(1);
+      if (isEnabled) {
+        component.setScale(1);
+      }
     });
 
-    const label = this.add.text(0, 45, type, {
+    const label = this.add.text(0, 45, this.getComponentDisplayName(type), {
       fontSize: '13px',
       color: '#fff',
       backgroundColor: '#00000088',
