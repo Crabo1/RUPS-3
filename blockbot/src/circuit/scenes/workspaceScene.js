@@ -40,12 +40,26 @@ export default class WorkspaceScene extends Phaser.Scene {
   create() {
     const { width, height } = this.cameras.main;
 
+    let blockbotChallenge = null;
+    let blockbotInventory = this.registry.get('blockbotInventory') || [];
+    let blockbotLevelIndex = 0;
+  
+    try {
+      if (this.registry) {
+        blockbotChallenge = this.registry.get('circuitChallenge');
+        blockbotInventory = this.registry.get('blockbotInventory') || [];
+        blockbotLevelIndex = this.registry.get('blockbotLevelIndex') || 0;
+      }
+    } catch (error) {
+      console.error('Error reading registry:', error);
+    }
+
     this.circuitVisuals = new CircuitVisuals(this);
     this.currentFlowAnim = new CurrentFlowAnimation(this);
 
     // Get inventory from registry (passed from React)
-    const blockbotInventory = this.registry.get('blockbotInventory') || [];
-    console.log('Circuit scene received inventory:', blockbotInventory);
+    /*const blockbotInventory = this.registry.get('blockbotInventory') || [];
+    console.log('Circuit scene received inventory:', blockbotInventory);*/
 
     // Wires are always available
     const alwaysAvailable = ['žica'];
@@ -157,8 +171,12 @@ export default class WorkspaceScene extends Phaser.Scene {
       }
     ];
 
-    this.promptText = this.add.text(width / 1.8, height - 30,
-      this.circuitChallenges[this.currentChallengeIndex]?.prompt || 'Sestavi električni krog', {
+    // Use blockbot challenge prompt if available, otherwise use default circuit challenges
+    const promptToShow = blockbotChallenge 
+      ? blockbotChallenge.prompt 
+      : (this.circuitChallenges[this.currentChallengeIndex]?.prompt || 'Sestavi električni krog');
+
+    this.promptText = this.add.text(width / 1.8, height - 30, promptToShow, {
       fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
       resolution: 2,
       fontSize: '20px',
@@ -232,7 +250,7 @@ export default class WorkspaceScene extends Phaser.Scene {
       { type: 'svetilka', color: 0xff0000 },
       { type: 'stikalo', color: 0x666666 },
       { type: 'žica', color: 0x0066cc },
-      { type: 'amperometer', color: 0x00cc66 },
+      { type: 'ampermeter', color: 0x00cc66 },
       { type: 'voltmeter', color: 0x00cc66 },
     ];
 
@@ -342,7 +360,7 @@ export default class WorkspaceScene extends Phaser.Scene {
       'svetilka': 'Upornost: 100 Ω\nPretvarja v svetlobo',
       'stikalo': 'Stanje: ZAPRTO\nDovoljuje tok\nStanje: ODPRTO\nPrepreči tok',
       'žica': 'Upornost: 1 Ω\nPovezuje komponente',
-      'amperometer': 'Meri električni tok\nEnota: amperi (A)',
+      'ampermeter': 'Meri električni tok\nEnota: amperi (A)',
       'voltmeter': 'Meri napetost\nEnota: volti (V)'
     };
     return details[type] || 'Komponenta';
@@ -521,7 +539,7 @@ export default class WorkspaceScene extends Phaser.Scene {
         component.setData('logicComponent', comp);
         break;
 
-      case 'amperometer':
+      case 'ampermeter':
         id = "ammeter_" + this.getRandomInt(1000, 9999);
         comp = new Ammeter(
           id,
@@ -876,9 +894,18 @@ export default class WorkspaceScene extends Phaser.Scene {
   }
 
   showHint() {
-    const currentChallenge = this.circuitChallenges[this.currentChallengeIndex];
-    if (currentChallenge.hints) {
-      const randomHint = currentChallenge.hints[Math.floor(Math.random() * currentChallenge.hints.length)];
+    const blockbotChallenge = this.registry.get('circuitChallenge');
+  
+    let hints;
+    if (blockbotChallenge && blockbotChallenge.hints) {
+      hints = blockbotChallenge.hints;
+    } else {
+      const currentChallenge = this.circuitChallenges[this.currentChallengeIndex];
+      hints = currentChallenge?.hints;
+    }
+    
+    if (hints && hints.length > 0) {
+      const randomHint = hints[Math.floor(Math.random() * hints.length)];
 
       const hintText = this.add.text(this.cameras.main.width / 2, 100, `Namig: ${randomHint}`, {
         fontSize: '18px',
@@ -931,12 +958,18 @@ export default class WorkspaceScene extends Phaser.Scene {
 
   showTheory(theoryText) {
     const { width, height } = this.cameras.main;
+    const blockbotChallenge = this.registry.get('circuitChallenge');
+  
+    let theoryToShow = theoryText;
+    if (blockbotChallenge && blockbotChallenge.theory) {
+      theoryToShow = blockbotChallenge.theory;
+    }
 
     this.theoryBack = this.add.rectangle(width / 2, height / 2, width + 100, 150, 0x000000, 0.8)
       .setOrigin(0.5)
       .setDepth(10);
 
-    this.theoryText = this.add.text(width / 2, height / 2, theoryText, {
+    this.theoryText = this.add.text(width / 2, height / 2, theoryToShow, {
       fontSize: '16px',
       color: '#ffffff',
       fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
