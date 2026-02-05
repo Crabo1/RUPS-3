@@ -10,7 +10,7 @@ import type { Level, GameAction, GameState, Direction } from '../../types/game';
 import CircuitSimulator from '../CircuitSimulator';
 import { getChallengeForLevel } from '../../CircuitChallenges';
 
-/*const componentNameMap: Record<string, string> = {
+const componentNameMap: Record<string, string> = {
   'bulb': 'svetilka',
   'ammeter': 'ampermeter',
   'battery': 'baterija',
@@ -19,9 +19,27 @@ import { getChallengeForLevel } from '../../CircuitChallenges';
   'voltmeter': 'voltmeter'
 };
 
+const componentDisplayNameMap: Record<string, string> = {
+  'bulb': 'Svetilka',
+  'ammeter': 'Ampermeter',
+  'battery': 'Baterija',
+  'resistor': 'Upor',
+  'switch': 'Stikalo',
+  'voltmeter': 'Voltmeter',
+  'svetilka': 'Svetilka',
+  'ampermeter': 'Ampermeter',
+  'baterija': 'Baterija',
+  'upor': 'Upor',
+  'stikalo': 'Stikalo'
+};
+
 const getComponentName = (name: string): string => {
   return componentNameMap[name] || name;
-};*/
+};
+
+const getDisplayName = (name: string): string => {
+  return componentDisplayNameMap[name] || name;
+};
 
 interface GamePlayProps {
   level: Level;
@@ -76,7 +94,6 @@ export function GamePlay({
   const handleExecute = async () => {
     setIsExecuting(true);
     const delay = 1000 / executionSpeed;
-    console.log('Execution speed:', executionSpeed, 'Delay:', delay);
 
     const finalState = await executeActions(level, actions, (state) => {
       setResult({ ...state });
@@ -84,7 +101,6 @@ export function GamePlay({
     setIsExecuting(false);
 
     if (finalState.isFailed) {
-      // Check if it's a missing components failure
       const isMissingComponents = finalState.moveLog.some(
         log => log.includes('missing components')
       );
@@ -95,13 +111,13 @@ export function GamePlay({
         setIsDead(true);
         await new Promise((resolve) => setTimeout(resolve, delay));
         setIsDead(false);
-
         await new Promise((resolve) => setTimeout(resolve, delay));
         setResult(null);
         rotationRef.current = 90;
         lastDirectionRef.current = 'right';
       }
     } else if (finalState.isComplete) {
+      // Confetti animation
       const confetti = () => {
         const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
         for (let i = 0; i < 150; i++) {
@@ -119,10 +135,7 @@ export function GamePlay({
 
           const angle = Math.random() * Math.PI * 2;
           const velocity = 5 + Math.random() * 10;
-          let x = 0,
-            y = 0,
-            vy = -velocity;
-
+          let x = 0, y = 0, vy = -velocity;
           const gravity = 0.9;
 
           const animate = () => {
@@ -235,10 +248,10 @@ export function GamePlay({
                 <ModalBody>
                   <div className="text-center">
                     <h3 className="mb-5 text-2xl font-bold text-gray-900">
-                      Čestitke!
+                      ÄŒestitke!
                     </h3>
                     <p className="mb-4 text-base text-gray-700">
-                      Uspešno si zaključil stopnjo {level.index}!
+                      UspeÅ¡no si zakljuÄil stopnjo {level.index}!
                     </p>
                     
                     {result.inventory && result.inventory.length > 0 && (
@@ -267,7 +280,7 @@ export function GamePlay({
                         onClick={() => setShowCircuit(true)}
                         className="font-bold"
                       >
-                        Sestavi električni krog
+                        Sestavi elektriÄni krog
                       </Button>
                       
                       {hasNextLevel && (
@@ -309,7 +322,7 @@ export function GamePlay({
               <ModalBody>
                 <div className="text-center">
                   <h3 className="mb-5 text-2xl font-bold text-red-600">
-                    Manjkajoče komponente!
+                    ManjkajoÄe komponente!
                   </h3>
                   <p className="mb-4 text-base text-gray-700">
                     Nisi pobral vseh potrebnih komponent pred dosegom cilja.
@@ -330,7 +343,7 @@ export function GamePlay({
                           {result.inventory.length > 0 ? (
                             result.inventory.map((item, i) => <li key={i}>{item}</li>)
                           ) : (
-                            <li className="text-gray-400">Nič</li>
+                            <li className="text-gray-400">NiÄ</li>
                           )}
                         </ul>
                       </div>

@@ -175,7 +175,6 @@ export default class WorkspaceScene extends Phaser.Scene {
     const promptToShow = blockbotChallenge 
       ? blockbotChallenge.prompt 
       : (this.circuitChallenges[this.currentChallengeIndex]?.prompt || 'Sestavi električni krog');
-
     this.promptText = this.add.text(width / 1.8, height - 30, promptToShow, {
       fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
       resolution: 2,
@@ -244,6 +243,18 @@ export default class WorkspaceScene extends Phaser.Scene {
     const startY = 100;
     const spacing = 90;
 
+    /*let availableToolboxComponents;
+    
+    if (blockbotChallenge && blockbotChallenge.availableComponents) {
+      // Use components from blockbot challenge
+      availableToolboxComponents = blockbotChallenge.availableComponents;
+      console.log('Using blockbot available components:', availableToolboxComponents);
+    } else {
+      // Default: show all components
+      availableToolboxComponents = ['baterija', 'upor', 'svetilka', 'stikalo', 'žica', 'voltmeter', 'ampermeter'];
+    }
+    
+    // Define all possible palette items*/
     const paletteItems = [
       { type: 'baterija', color: 0xffcc00 },
       { type: 'upor', color: 0xff6600 },
@@ -253,9 +264,17 @@ export default class WorkspaceScene extends Phaser.Scene {
       { type: 'ampermeter', color: 0x00cc66 },
       { type: 'voltmeter', color: 0x00cc66 },
     ];
+    
+    // Filter to only show available components
+    /*const paletteItems = allPaletteItems.filter(item => 
+      availableToolboxComponents.includes(item.type)
+    );
+    
+    console.log('Filtered palette items:', paletteItems);*/
 
     paletteItems.forEach((item, index) => {
       const isEnabled = this.enabledComponents.length === 0 || this.enabledComponents.includes(item.type);
+      console.log(`Component ${item.type}: enabled=${isEnabled}, in enabledComponents=${this.enabledComponents.includes(item.type)}`);
       this.createComponent(
         panelWidth / 2,
         startY + index * spacing,
@@ -364,6 +383,19 @@ export default class WorkspaceScene extends Phaser.Scene {
       'voltmeter': 'Meri napetost\nEnota: volti (V)'
     };
     return details[type] || 'Komponenta';
+  }
+
+  getComponentDisplayName(type) {
+    const displayNames = {
+      'baterija': 'Baterija',
+      'upor': 'Upor',
+      'svetilka': 'Svetilka',
+      'stikalo': 'Stikalo',
+      'žica': 'Žica',
+      'ampermeter': 'Ampermeter',
+      'voltmeter': 'Voltmeter'
+    };
+    return displayNames[type] || type;
   }
 
   snapToGrid(x, y) {
@@ -592,10 +624,12 @@ export default class WorkspaceScene extends Phaser.Scene {
       if (component.getData('isInPanel')) {
         this.infoWindow.setVisible(false);
       }
-      component.setScale(1);
+      if (isEnabled) {
+        component.setScale(1);
+      }
     });
 
-    const label = this.add.text(0, 45, type, {
+    const label = this.add.text(0, 45, this.getComponentDisplayName(type), {
       fontSize: '13px',
       color: '#fff',
       backgroundColor: '#00000088',
@@ -906,7 +940,7 @@ export default class WorkspaceScene extends Phaser.Scene {
     
     if (hints && hints.length > 0) {
       const randomHint = hints[Math.floor(Math.random() * hints.length)];
-
+  
       const hintText = this.add.text(this.cameras.main.width / 2, 100, `Namig: ${randomHint}`, {
         fontSize: '18px',
         fontFamily: 'Inter, system-ui, -apple-system, sans-serif',

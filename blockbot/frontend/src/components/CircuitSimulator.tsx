@@ -92,8 +92,7 @@ export default function CircuitSimulator({ inventory = [], challenge, levelIndex
         console.log('- Level:', levelIndex);
         console.log('- Challenge:', challenge);
       }
-
-      console.log('Circuit game initialized successfully');
+      console.log('Circuit initialized - Inventory:', inventory, 'Challenge:', challenge);
 
     } catch (err) {
       console.error('Error initializing circuit:', err);
