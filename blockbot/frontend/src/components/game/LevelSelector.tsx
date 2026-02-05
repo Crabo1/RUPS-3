@@ -2,7 +2,6 @@ import { Button } from 'flowbite-react';
 import type { Level, Action } from '../../types/game';
 import { useState, useMemo } from 'react';
 import { useGameCompletion } from '../../hooks/useGameCompletion';
-import { FaStar } from 'react-icons/fa';
 import { BlockIcon } from './BlockIcon';
 
 interface LevelSelectProps {
@@ -11,17 +10,6 @@ interface LevelSelectProps {
   loading?: boolean;
   error?: string | null;
 }
-
-const ACTION_BLOCKS: Record<Action, string> = {
-  forward: 'forward',
-  turnLeft: 'turn left',
-  turnRight: 'turn right',
-  jump: 'jump',
-  use: 'use',
-  pickup: 'pick up',
-  loop: 'repeat',
-};
-
 
 const ACTION_NAMES: Record<Action, string> = {
   forward: 'move (1) steps',
@@ -139,18 +127,6 @@ export function LevelSelector({
                       }
                     </div>
                   </div>
-
-                  {completedLevelsMap.get(currentLevel.index) !== undefined && (
-                    <div className="mb-3">
-                      <h4 className="mb-2 text-sm font-medium text-gray-200">
-                        Najboljši rezultat:
-                      </h4>
-                      <div className="text-primary-600 flex items-center gap-2 text-2xl font-bold">
-                        <FaStar />
-                        {completedLevelsMap.get(currentLevel.index)}
-                      </div>
-                    </div>
-                  )}
                 </div>
               ) : (
                 <div className="text-center text-lg text-white">
