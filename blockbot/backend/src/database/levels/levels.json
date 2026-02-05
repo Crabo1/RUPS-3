@@ -180,14 +180,14 @@
             [
                 null,
                 "start",
-                null,
-                null,
-                "bulb"
+                "battery",
+                "bulb",
+                null
             ],
             [
                 null,
                 null,
-                "battery",
+                null,
                 null,
                 null
             ]
