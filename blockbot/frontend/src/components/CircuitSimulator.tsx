@@ -109,6 +109,14 @@ export default function CircuitSimulator({ inventory = [], challenge, levelIndex
     };
   }, [inventory]);
 
+  useEffect(() => {
+    const handler = () => {
+      if (typeof onClose === 'function') onClose();
+    };
+    window.addEventListener('closeCircuitSimulator', handler);
+    return () => window.removeEventListener('closeCircuitSimulator', handler);
+  }, [onClose]);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
       <div className="relative w-[98vw] h-[98vh] bg-gray-900 rounded-lg shadow-2xl overflow-hidden">

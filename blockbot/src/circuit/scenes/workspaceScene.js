@@ -601,7 +601,7 @@ export default class WorkspaceScene extends Phaser.Scene {
         }
         const timeout = setTimeout(() => {
           this.infoWindow.setVisible(false);
-        }, 2000);
+        }, 1000);
         component.setData('infoTimeout', timeout);
       }
       if (isEnabled) {
@@ -999,7 +999,7 @@ export default class WorkspaceScene extends Phaser.Scene {
       .setOrigin(0.5)
       .setDepth(11);
 
-    this.continueButton = this.add.text(width / 2, height / 2 + 70, 'Nadaljuj', {
+    this.continueButton = this.add.text(width / 2, height / 2 + 70, 'Končaj nalogo', {
       fontSize: '18px',
       fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
       resolution: 2,
@@ -1014,8 +1014,42 @@ export default class WorkspaceScene extends Phaser.Scene {
       .on('pointerout', () => this.continueButton.setStyle({ color: '#0066ff' }))
       .on('pointerdown', () => {
         this.hideTheory();
-        this.nextChallenge();
+        try {
+          window.dispatchEvent(new Event('closeCircuitSimulator'));
+        } catch (e) {
+        }
       });
+
+    // position closeX relative to theoryText to keep it visible
+    const textW = (this.theoryText && this.theoryText.width) ? this.theoryText.width : (width - 150);
+    const textH = (this.theoryText && this.theoryText.height) ? this.theoryText.height : 100;
+    const closeX = this.add.text(
+      this.theoryText.x + textW / 2 + 80,
+      this.theoryText.y - textH / 2 - 65,
+      '✕',
+      {
+        fontSize: '20px',
+        fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+        resolution: 2,
+        fontStyle: 'bold',
+        color: '#ff0000',
+        backgroundColor: '#ffffff',
+        padding: { x: 6, y: 2 }
+      }
+    ).setOrigin(0.5).setDepth(12).setInteractive({ useHandCursor: true });
+
+    closeX.on('pointerover', () => closeX.setStyle({ color: '#ff0000' }));
+    closeX.on('pointerout', () => closeX.setStyle({ color: '#ff0000' }));
+    closeX.on('pointerdown', () => this.hideTheory());
+    this.closeTheoryButton = closeX;
+
+    // close on ESC key
+    this._theoryEscHandler = () => {
+      this.hideTheory();
+    };
+    if (this.input && this.input.keyboard) {
+      this.input.keyboard.on('keydown-ESC', this._theoryEscHandler);
+    }
   }
 
   hideTheory() {
@@ -1030,6 +1064,14 @@ export default class WorkspaceScene extends Phaser.Scene {
     if (this.continueButton) {
       this.continueButton.destroy();
       this.continueButton = null;
+    }
+    if (this.closeTheoryButton) {
+      this.closeTheoryButton.destroy();
+      this.closeTheoryButton = null;
+    }
+    if (this._theoryEscHandler && this.input && this.input.keyboard) {
+      this.input.keyboard.off('keydown-ESC', this._theoryEscHandler);
+      this._theoryEscHandler = null;
     }
   }
 }
