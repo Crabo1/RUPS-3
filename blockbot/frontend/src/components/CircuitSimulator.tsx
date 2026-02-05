@@ -82,6 +82,7 @@ export default function CircuitSimulator({ inventory = [], challenge, levelIndex
           gameRef.current.registry.set('circuitChallenge', {
             prompt: challenge.prompt,
             availableComponents: challenge.availableComponents,
+            requiredComponents: challenge.requiredComponents,
             theory: challenge.theory,
             hints: challenge.hints
           });

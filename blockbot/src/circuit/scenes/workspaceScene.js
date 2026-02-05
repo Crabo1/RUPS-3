@@ -595,6 +595,14 @@ export default class WorkspaceScene extends Phaser.Scene {
         this.infoWindow.x = x + 120;
         this.infoWindow.y = y;
         this.infoWindow.setVisible(true);
+
+        if (component.getData('infoTimeout')) {
+          clearTimeout(component.getData('infoTimeout'));
+        }
+        const timeout = setTimeout(() => {
+          this.infoWindow.setVisible(false);
+        }, 2000);
+        component.setData('infoTimeout', timeout);
       }
       if (isEnabled) {
         component.setScale(1.1);
@@ -783,7 +791,8 @@ export default class WorkspaceScene extends Phaser.Scene {
   }
 
   checkCircuit() {
-    const currentChallenge = this.circuitChallenges[this.currentChallengeIndex];
+    const blockbotChallenge = this.registry.get('circuitChallenge');
+    const currentChallenge = blockbotChallenge || this.circuitChallenges[this.currentChallengeIndex];
     const placedTypes = this.placedComponents.map(comp => comp.getData('type'));
     this.checkText.setStyle({ color: '#cc0000' });
 
@@ -793,17 +802,12 @@ export default class WorkspaceScene extends Phaser.Scene {
       return;
     }
 
-    if (this.sim == undefined) {
-      this.checkText.setText('Zaženi simulacijo');
-      return;
-    }
-
-    if (this.sim == false) {
+    if (this.sim == undefined || this.sim == false) {
       this.checkText.setText('Električni krog ni sklenjen. Preveri, kako si ga sestavil');
       return;
     }
 
-    // Posebna preverjanja za posamezne nivoe
+    // Posebna preverjanja za posamezne nivoje
     let levelSpecificCheck = true;
     let levelMessage = '';
 
@@ -891,7 +895,6 @@ export default class WorkspaceScene extends Phaser.Scene {
       return;
     }
 
-
     this.checkText.setStyle({ color: '#00aa00' });
     this.checkText.setText('Čestitke! Krog je pravilen.');
     this.addPoints(10);
@@ -905,7 +908,7 @@ export default class WorkspaceScene extends Phaser.Scene {
       this.showTheory(currentChallenge.theory);
     } else {
       this.time.delayedCall(2000, () => this.nextChallenge());
-    }
+    }1
   }
 
   showHint() {

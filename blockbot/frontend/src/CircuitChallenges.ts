@@ -11,7 +11,7 @@ export const circuitChallenges: CircuitChallenge[] = [
   {
     levelIndex: 1,
     prompt: 'Poveži baterijo s svetilko, da bo prižgana',
-    requiredComponents: ['battery', 'bulb'],
+    requiredComponents: ['baterija', 'svetilka'],
     availableComponents: ['baterija', 'svetilka', 'žica'],
     theory: [
       'Električni tok teče samo po sklenjeni poti od pozitivnega pola baterije do svetilke in nazaj k negativnemu polu. To je osnovni električni krog.'
@@ -25,7 +25,7 @@ export const circuitChallenges: CircuitChallenge[] = [
   {
     levelIndex: 2,
     prompt: 'Dodaj stikalo za vklop/izklop svetilke',
-    requiredComponents: ['battery', 'bulb', 'switch'],
+    requiredComponents: ['baterija', 'svetilka', 'stikalo'],
     availableComponents: ['baterija', 'svetilka', 'stikalo', 'žica'],
     theory: [
       'Stikalo omogoča nadzor nad tokom. Ko je stikalo zaprto, tok teče in svetilka sveti. Ko je odprto, tok ne more teči in svetilka ugasne.'
@@ -39,7 +39,7 @@ export const circuitChallenges: CircuitChallenge[] = [
   {
     levelIndex: 3,
     prompt: 'Uporabi upor, da bo svetilka manj svetila',
-    requiredComponents: ['battery', 'bulb', 'resistor'],
+    requiredComponents: ['baterija', 'svetilka', 'upor'],
     availableComponents: ['baterija', 'svetilka', 'upor', 'žica'],
     theory: [
       'Upor omejuje električni tok. Po Ohmovem zakonu: I = U/R. Večji upor pomeni manjši tok, zato je svetilka manj svetla.'
@@ -53,7 +53,7 @@ export const circuitChallenges: CircuitChallenge[] = [
   {
     levelIndex: 4,
     prompt: 'Poveži dve svetilki zaporedno',
-    requiredComponents: ['battery', 'bulb'], 
+    requiredComponents: ['baterija', 'svetilka', 'svetilka'], 
     availableComponents: ['baterija', 'svetilka', 'žica'],
     theory: [
       'Pri zaporedni vezavi teče isti tok skozi obe svetilki. Napetost baterije se porazdeli med svetilkama, zato sta obe manj svetli kot če bi bila sama.'
@@ -67,7 +67,7 @@ export const circuitChallenges: CircuitChallenge[] = [
   {
     levelIndex: 5,
     prompt: 'Poveži dve svetilki vzporedno',
-    requiredComponents: ['battery', 'bulb'], 
+    requiredComponents: ['baterija', 'svetilka', 'svetilka'], 
     availableComponents: ['baterija', 'svetilka', 'žica'],
     theory: [
       'Pri vzporedni vezavi ima vsaka svetilka celotno napetost baterije. Tok se deli med svetilkama, zato sta obe polno svetli.'
@@ -81,7 +81,7 @@ export const circuitChallenges: CircuitChallenge[] = [
   {
     levelIndex: 6,
     prompt: 'Izmeri napetost na svetilki, ko sveti',
-    requiredComponents: ['battery', 'bulb', 'voltmeter'],
+    requiredComponents: ['baterija', 'svetilka', 'voltmeter'],
     availableComponents: ['baterija', 'svetilka', 'voltmeter', 'žica'],
     theory: [
       'Voltmetri se priključujejo VZPOREDNO z elementom, katerega napetost želimo izmeriti. Voltmetri imajo zelo visok upor, da ne vplivajo na krog.'
@@ -95,7 +95,7 @@ export const circuitChallenges: CircuitChallenge[] = [
   {
     levelIndex: 7,
     prompt: 'Izmeri tok skozi svetilko',
-    requiredComponents: ['battery', 'bulb', 'ammeter'],
+    requiredComponents: ['baterija', 'svetilka', 'ampermeter'],
     availableComponents: ['baterija', 'svetilka', 'ampermeter', 'žica'],
     theory: [
       'Ampermetri se priključujejo ZAPOREDNO v krog, da merijo tok. Imajo zelo nizek upor, da ne vplivajo na tok v krogu.'
@@ -109,7 +109,7 @@ export const circuitChallenges: CircuitChallenge[] = [
   {
     levelIndex: 8,
     prompt: 'Sestavi krog z vsemi komponentami: baterija, upor, svetilka in voltmeter',
-    requiredComponents: ['battery', 'bulb', 'resistor', 'voltmeter'],
+    requiredComponents: ['baterija', 'svetilka', 'upor', 'voltmeter'],
     availableComponents: ['baterija', 'svetilka', 'upor', 'voltmeter', 'žica'],
     theory: [
       'V kompleksnem krogu lahko kombiniramo različne elemente. Upor omejuje tok, voltmeter meri napetost, svetilka sveti. Vse skupaj deluje v harmoniji električne vezave.'
