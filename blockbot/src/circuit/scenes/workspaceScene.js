@@ -175,7 +175,7 @@ export default class WorkspaceScene extends Phaser.Scene {
     const promptToShow = blockbotChallenge 
       ? blockbotChallenge.prompt 
       : (this.circuitChallenges[this.currentChallengeIndex]?.prompt || 'Sestavi električni krog');
-    this.promptText = this.add.text(width / 1.8, height - 30, promptToShow, {
+    this.promptText = this.add.text(width / 2, height - 30, promptToShow, {
       fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
       resolution: 2,
       fontSize: '20px',
@@ -242,19 +242,7 @@ export default class WorkspaceScene extends Phaser.Scene {
 
     const startY = 100;
     const spacing = 90;
-
-    /*let availableToolboxComponents;
     
-    if (blockbotChallenge && blockbotChallenge.availableComponents) {
-      // Use components from blockbot challenge
-      availableToolboxComponents = blockbotChallenge.availableComponents;
-      console.log('Using blockbot available components:', availableToolboxComponents);
-    } else {
-      // Default: show all components
-      availableToolboxComponents = ['baterija', 'upor', 'svetilka', 'stikalo', 'žica', 'voltmeter', 'ampermeter'];
-    }
-    
-    // Define all possible palette items*/
     const paletteItems = [
       { type: 'baterija', color: 0xffcc00 },
       { type: 'upor', color: 0xff6600 },
@@ -264,13 +252,6 @@ export default class WorkspaceScene extends Phaser.Scene {
       { type: 'ampermeter', color: 0x00cc66 },
       { type: 'voltmeter', color: 0x00cc66 },
     ];
-    
-    // Filter to only show available components
-    /*const paletteItems = allPaletteItems.filter(item => 
-      availableToolboxComponents.includes(item.type)
-    );
-    
-    console.log('Filtered palette items:', paletteItems);*/
 
     paletteItems.forEach((item, index) => {
       const isEnabled = this.enabledComponents.length === 0 || this.enabledComponents.includes(item.type);
@@ -387,13 +368,13 @@ export default class WorkspaceScene extends Phaser.Scene {
 
   getComponentDisplayName(type) {
     const displayNames = {
-      'baterija': 'Baterija',
-      'upor': 'Upor',
-      'svetilka': 'Svetilka',
-      'stikalo': 'Stikalo',
-      'žica': 'Žica',
-      'ampermeter': 'Ampermeter',
-      'voltmeter': 'Voltmeter'
+      'baterija': 'baterija',
+      'upor': 'upor',
+      'svetilka': 'svetilka',
+      'stikalo': 'stikalo',
+      'žica': 'žica',
+      'ampermeter': 'ampermeter',
+      'voltmeter': 'voltmeter'
     };
     return displayNames[type] || type;
   }
@@ -818,7 +799,7 @@ export default class WorkspaceScene extends Phaser.Scene {
     }
 
     if (this.sim == false) {
-      this.checkText.setText('Električni krog ni sklenjen. Preveri kako si ga sestavil');
+      this.checkText.setText('Električni krog ni sklenjen. Preveri, kako si ga sestavil');
       return;
     }
 

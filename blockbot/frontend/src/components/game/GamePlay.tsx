@@ -10,31 +10,13 @@ import type { Level, GameAction, GameState, Direction } from '../../types/game';
 import CircuitSimulator from '../CircuitSimulator';
 import { getChallengeForLevel } from '../../CircuitChallenges';
 
-const componentNameMap: Record<string, string> = {
+const componentDisplayNameMap: Record<string, string> = {
   'bulb': 'svetilka',
   'ammeter': 'ampermeter',
   'battery': 'baterija',
   'resistor': 'upor',
   'switch': 'stikalo',
   'voltmeter': 'voltmeter'
-};
-
-const componentDisplayNameMap: Record<string, string> = {
-  'bulb': 'Svetilka',
-  'ammeter': 'Ampermeter',
-  'battery': 'Baterija',
-  'resistor': 'Upor',
-  'switch': 'Stikalo',
-  'voltmeter': 'Voltmeter',
-  'svetilka': 'Svetilka',
-  'ampermeter': 'Ampermeter',
-  'baterija': 'Baterija',
-  'upor': 'Upor',
-  'stikalo': 'Stikalo'
-};
-
-const getComponentName = (name: string): string => {
-  return componentNameMap[name] || name;
 };
 
 const getDisplayName = (name: string): string => {
@@ -248,10 +230,10 @@ export function GamePlay({
                 <ModalBody>
                   <div className="text-center">
                     <h3 className="mb-5 text-2xl font-bold text-gray-900">
-                      ÄŒestitke!
+                      Čestitke!
                     </h3>
                     <p className="mb-4 text-base text-gray-700">
-                      UspeÅ¡no si zakljuÄil stopnjo {level.index}!
+                      Uspešno si zaključil stopnjo {level.index}!
                     </p>
                     
                     {result.inventory && result.inventory.length > 0 && (
@@ -260,7 +242,7 @@ export function GamePlay({
                         <div className="flex flex-wrap justify-center gap-2">
                           {result.inventory.map((item, i) => (
                             <span key={i} className="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                              {item}
+                              {getDisplayName(item)}
                             </span>
                           ))}
                         </div>
@@ -280,7 +262,7 @@ export function GamePlay({
                         onClick={() => setShowCircuit(true)}
                         className="font-bold"
                       >
-                        Sestavi elektriÄni krog
+                        Sestavi električni krog
                       </Button>
                       
                       {hasNextLevel && (
@@ -322,28 +304,28 @@ export function GamePlay({
               <ModalBody>
                 <div className="text-center">
                   <h3 className="mb-5 text-2xl font-bold text-red-600">
-                    ManjkajoÄe komponente!
+                    Manjkajoče komponente!
                   </h3>
                   <p className="mb-4 text-base text-gray-700">
                     Nisi pobral vseh potrebnih komponent pred dosegom cilja.
                   </p>
                   {result && circuitChallenge && (
-                    <div className="mb-5">
-                      <div className="mb-4 text-left bg-gray-50 rounded-lg p-4">
-                        <p className="mb-2 font-semibold text-gray-900">Potrebne:</p>
-                        <ul className="list-inside list-disc text-gray-600">
+                    <div className="mb-5 grid grid-cols-2 gap-4">
+                      <div className="text-left bg-purple-50 rounded-lg p-4 border border-purple-200">
+                        <p className="mb-2 font-semibold text-purple-900">Potrebne komponente:</p>
+                        <ul className="list-inside list-disc text-purple-700">
                           {circuitChallenge.requiredComponents.map((item, i) => (
-                            <li key={i}>{item}</li>
+                            <li key={i}>{getDisplayName(item)}</li>
                           ))}
                         </ul>
                       </div>
-                      <div className="text-left bg-gray-50 rounded-lg p-4">
-                        <p className="mb-2 font-semibold text-gray-900">Pobrane:</p>
-                        <ul className="list-inside list-disc text-gray-600">
+                      <div className="text-left bg-blue-50 rounded-lg p-4 border border-blue-200">
+                        <p className="mb-2 font-semibold text-blue-900">Pobrane komponente:</p>
+                        <ul className="list-inside list-disc text-blue-700">
                           {result.inventory.length > 0 ? (
-                            result.inventory.map((item, i) => <li key={i}>{item}</li>)
+                            result.inventory.map((item, i) => <li key={i}>{getDisplayName(item)}</li>)
                           ) : (
-                            <li className="text-gray-400">NiÄ</li>
+                            <li className="text-blue-400">Nič</li>
                           )}
                         </ul>
                       </div>
@@ -357,6 +339,7 @@ export function GamePlay({
                       lastDirectionRef.current = 'right';
                     }}
                     color="failure"
+                    className="cursor-pointer border-2 border-red-600"
                   >
                     Poskusi ponovno
                   </Button>
