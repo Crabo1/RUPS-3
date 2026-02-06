@@ -40,7 +40,7 @@ export function GamePlay({
   const [result, setResult] = useState<GameState | null>(null);
   const [isExecuting, setIsExecuting] = useState(false);
   const [isDead, setIsDead] = useState(false);
-  const [showWinModal, setShowWinModal] = useState(false);
+  const [showPostCircuitModal, setShowPostCircuitModal] = useState(false);
   const rotationRef = useRef(90);
   const lastDirectionRef = useRef<Direction>('right');
   const { completeGame } = useGameCompletion();
@@ -48,6 +48,7 @@ export function GamePlay({
   const [actionHistory, setActionHistory] = useState<GameAction[][]>([]);
   const [showCircuit, setShowCircuit] = useState(false);
   const [showMissingComponentsModal, setShowMissingComponentsModal] = useState(false);
+  const [circuitCompleted, setCircuitCompleted] = useState(false);
 
   const MAX_ACTIONS = 30;
 
@@ -150,7 +151,13 @@ export function GamePlay({
         console.error('Failed to save game completion:', error);
       }
 
-      setShowWinModal(true);
+      setCircuitCompleted(false);
+      setShowPostCircuitModal(false);
+      if (circuitChallenge) {
+        setShowCircuit(true);
+      } else {
+        setShowPostCircuitModal(true);
+      }
     }
   };
 
@@ -163,9 +170,20 @@ export function GamePlay({
   };
 
   const handleNextLevel = () => {
-    setShowWinModal(false);
+    setShowPostCircuitModal(false);
     handleReset();
     onNextLevel();
+  };
+
+  const handleCircuitComplete = () => {
+    setCircuitCompleted(true);
+    setShowCircuit(false);
+    setShowPostCircuitModal(true);
+  };
+
+  const handleCircuitClose = () => {
+    setShowCircuit(false);
+    setShowPostCircuitModal(true);
   };
 
   const circuitChallenge = getChallengeForLevel(level.index);
@@ -221,69 +239,43 @@ export function GamePlay({
   
             {result && result.isComplete && (
               <Modal
-                show={showWinModal}
+                show={showPostCircuitModal}
                 size="md"
-                onClose={() => setShowWinModal(false)}
+                onClose={() => setShowPostCircuitModal(false)}
                 popup
               >
                 <ModalHeader />
                 <ModalBody>
                   <div className="text-center">
                     <h3 className="mb-5 text-2xl font-bold text-gray-900">
-                      Čestitke!
+                      {circuitCompleted ? 'Čestitke!' : 'Skoraj tam!'}
                     </h3>
                     <p className="mb-4 text-base text-gray-700">
-                      Uspešno si zaključil stopnjo {level.index}!
+                      {circuitCompleted
+                        ? `Električni krog za stopnjo ${level.index} je uspešno sestavljen.`
+                        : 'Električni krog še ni dokončan.'}
                     </p>
-                    
-                    {result.inventory && result.inventory.length > 0 && (
-                      <div className="mb-5 bg-blue-50 rounded-lg p-4">
-                        <p className="font-semibold text-gray-900 mb-2">Pobrane komponente:</p>
-                        <div className="flex flex-wrap justify-center gap-2">
-                          {result.inventory.map((item, i) => (
-                            <span key={i} className="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                              {getDisplayName(item)}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-  
-                    {circuitChallenge && (
-                      <div className="mb-5 bg-purple-50 rounded-lg p-4">
-                        <p className="font-semibold text-purple-900 mb-2">Naloga:</p>
-                        <p className="text-purple-800 text-sm">{circuitChallenge.prompt}</p>
-                      </div>
-                    )}
-  
+
                     <div className="flex flex-col gap-3">
-                      <Button 
-                        color="purple" 
-                        onClick={() => setShowCircuit(true)}
-                        className="font-bold"
-                      >
-                        Sestavi električni krog
-                      </Button>
-                      
-                      {hasNextLevel && (
-                        <Button onClick={handleNextLevel}>
-                          Nadaljuj na naslednjo stopnjo
+                      {!circuitCompleted && (
+                        <Button color="purple" onClick={() => {
+                          setShowPostCircuitModal(false);
+                          setShowCircuit(true);
+                        }}>
+                          Nazaj v simulator
                         </Button>
                       )}
-                      
+
+                      {circuitCompleted && hasNextLevel && (
+                        <Button onClick={handleNextLevel}>
+                          Nadaljevanje
+                        </Button>
+                      )}
+
                       <Button color="alternative" onClick={onBack}>
-                        Nazaj na izbiro stopenj
+                        Izhod
                       </Button>
                     </div>
-                    
-                    {showCircuit && circuitChallenge && (
-                      <CircuitSimulator 
-                        inventory={result?.inventory || []} 
-                        challenge={circuitChallenge}
-                        levelIndex={level.index}
-                        onClose={() => setShowCircuit(false)} 
-                      />
-                    )}
                   </div>
                 </ModalBody>
               </Modal>
@@ -346,6 +338,16 @@ export function GamePlay({
                 </div>
               </ModalBody>
             </Modal>
+
+            {showCircuit && circuitChallenge && (
+              <CircuitSimulator 
+                inventory={result?.inventory || []} 
+                challenge={circuitChallenge}
+                levelIndex={level.index}
+                onClose={handleCircuitClose}
+                onComplete={handleCircuitComplete}
+              />
+            )}
           </div>
         </div>
       </div>

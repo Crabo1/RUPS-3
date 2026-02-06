@@ -19,9 +19,10 @@ interface CircuitSimulatorProps {
   challenge?: CircuitChallenge;
   levelIndex?: number;
   onClose?: () => void;
+  onComplete?: () => void;
 }
 
-export default function CircuitSimulator({ inventory = [], challenge, levelIndex = 0, onClose }: CircuitSimulatorProps) {
+export default function CircuitSimulator({ inventory = [], challenge, levelIndex = 0, onClose, onComplete }: CircuitSimulatorProps) {
   const gameContainerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | null>(null);
   const [error, setError] = useState<string>('');
@@ -111,11 +112,15 @@ export default function CircuitSimulator({ inventory = [], challenge, levelIndex
 
   useEffect(() => {
     const handler = () => {
+      if (typeof onComplete === 'function') {
+        onComplete();
+        return;
+      }
       if (typeof onClose === 'function') onClose();
     };
     window.addEventListener('closeCircuitSimulator', handler);
     return () => window.removeEventListener('closeCircuitSimulator', handler);
-  }, [onClose]);
+  }, [onClose, onComplete]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
