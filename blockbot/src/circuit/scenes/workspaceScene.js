@@ -43,7 +43,7 @@ export default class WorkspaceScene extends Phaser.Scene {
     let blockbotChallenge = null;
     let blockbotInventory = this.registry.get('blockbotInventory') || [];
     let blockbotLevelIndex = 0;
-  
+
     try {
       if (this.registry) {
         blockbotChallenge = this.registry.get('circuitChallenge');
@@ -68,7 +68,7 @@ export default class WorkspaceScene extends Phaser.Scene {
 
     const desk = this.add.image(0, 0, 'background').setOrigin(0).setDisplaySize(width, height).setAlpha(0.4);
     const gridGraphics = this.add.graphics();
-    gridGraphics.lineStyle(1, 0x00b3a4 , 0.8);
+    gridGraphics.lineStyle(1, 0x00b3a4, 0.8);
     const gridSize = 40;
     for (let x = 0; x < width; x += gridSize) {
       gridGraphics.beginPath();
@@ -172,8 +172,8 @@ export default class WorkspaceScene extends Phaser.Scene {
     ];
 
     // Use blockbot challenge prompt if available, otherwise use default circuit challenges
-    const promptToShow = blockbotChallenge 
-      ? blockbotChallenge.prompt 
+    const promptToShow = blockbotChallenge
+      ? blockbotChallenge.prompt
       : (this.circuitChallenges[this.currentChallengeIndex]?.prompt || 'Sestavi električni krog');
     this.promptText = this.add.text(width / 2, height - 30, promptToShow, {
       fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
@@ -242,7 +242,7 @@ export default class WorkspaceScene extends Phaser.Scene {
 
     const startY = 100;
     const spacing = 90;
-    
+
     const paletteItems = [
       { type: 'baterija', color: 0xffcc00 },
       { type: 'upor', color: 0xff6600 },
@@ -265,15 +265,20 @@ export default class WorkspaceScene extends Phaser.Scene {
       );
     });
 
-    this.add.text(width / 2 + 50, 30, 'Povleci komponente na mizo in zgradi svoj električni krog!', {
-      fontSize: '20px',
+    const tipBanner = this.add.graphics();
+    tipBanner.fillStyle(0xffffff, 0.9);
+    tipBanner.fillRoundedRect(width / 2 - 330, 18, 660, 44, 12);
+    tipBanner.lineStyle(2, 0x00b3a4, 0.25);
+    tipBanner.strokeRoundedRect(width / 2 - 330, 18, 660, 44, 12);
+
+    this.add.text(width / 2, 40, 'Povleci komponente na mizo in zgradi svoj električni krog!', {
+      fontSize: '18px',
       fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
       resolution: 2,
-      color: '#333',
+      color: '#0f2f2c',
       fontStyle: 'bold',
       align: 'center',
-      backgroundColor: '#ffffff88',
-      padding: { x: 15, y: 8 }
+      padding: { x: 10, y: 6 }
     }).setOrigin(0.5);
 
     this.placedComponents = [];
@@ -622,7 +627,7 @@ export default class WorkspaceScene extends Phaser.Scene {
       fontSize: '13px',
       color: '#fff',
       backgroundColor: '#00000088',
-      fontFamily: 'Inter, system-ui, -apple-system, sans-serif', 
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
       resolution: 2,
       padding: { x: 4, y: 2 },
     }).setOrigin(0.5);
@@ -908,12 +913,12 @@ export default class WorkspaceScene extends Phaser.Scene {
       this.showTheory(currentChallenge.theory);
     } else {
       this.time.delayedCall(2000, () => this.nextChallenge());
-    }1
+    } 1
   }
 
   showHint() {
     const blockbotChallenge = this.registry.get('circuitChallenge');
-  
+
     let hints;
     if (blockbotChallenge && blockbotChallenge.hints) {
       hints = blockbotChallenge.hints;
@@ -921,10 +926,10 @@ export default class WorkspaceScene extends Phaser.Scene {
       const currentChallenge = this.circuitChallenges[this.currentChallengeIndex];
       hints = currentChallenge?.hints;
     }
-    
+
     if (hints && hints.length > 0) {
       const randomHint = hints[Math.floor(Math.random() * hints.length)];
-  
+
       const hintText = this.add.text(this.cameras.main.width / 2, 100, `Namig: ${randomHint}`, {
         fontSize: '18px',
         fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
@@ -977,7 +982,7 @@ export default class WorkspaceScene extends Phaser.Scene {
   showTheory(theoryText) {
     const { width, height } = this.cameras.main;
     const blockbotChallenge = this.registry.get('circuitChallenge');
-  
+
     let theoryToShow = theoryText;
     if (blockbotChallenge && blockbotChallenge.theory) {
       theoryToShow = blockbotChallenge.theory;
@@ -1077,21 +1082,21 @@ export default class WorkspaceScene extends Phaser.Scene {
 }
 
 const config = {
-  type: Phaser.WEBGL,  
+  type: Phaser.WEBGL,
   width: window.innerWidth,
   height: window.innerHeight,
   parent: 'game-container',
-  backgroundColor: '#f8fafc',  
-  
+  backgroundColor: '#f8fafc',
+
   pixelArt: false,
   antialias: true,
   roundPixels: false,
-  
+
   scale: {
     mode: Phaser.Scale.RESIZE,
     autoCenter: Phaser.Scale.CENTER_BOTH
   },
-  
+
   render: {
     pixelArt: false,
     antialias: true,
@@ -1103,9 +1108,9 @@ const config = {
     failIfMajorPerformanceCaveat: false,
     powerPreference: 'high-performance'
   },
-  
+
   scene: [WorkspaceScene],
-  
+
   physics: {
     default: 'arcade',
     arcade: {

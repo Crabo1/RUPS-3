@@ -28,6 +28,13 @@ export default function CircuitSimulator({ inventory = [], challenge, levelIndex
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
+    document.body.classList.add('hide-brainblast-nav');
+    return () => {
+      document.body.classList.remove('hide-brainblast-nav');
+    };
+  }, []);
+
+  useEffect(() => {
     if (!gameContainerRef.current) return;
 
     try {

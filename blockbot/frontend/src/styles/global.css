@@ -65,3 +65,7 @@ input[type="range"]:disabled::-moz-range-thumb {
   cursor: not-allowed;
   background: #6b7280;
 }
+
+body.hide-brainblast-nav .brainblast-nav {
+  display: none;
+}

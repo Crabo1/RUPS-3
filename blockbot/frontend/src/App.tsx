@@ -38,7 +38,7 @@ export default function App() {
           backgroundSize: '100% auto',
         }}
       >
-        <div className="sticky top-0 z-50">
+        <div className="brainblast-nav sticky top-0 z-50">
           <NavbarComponent />
         </div>
         <main>
