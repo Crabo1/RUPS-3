@@ -204,8 +204,8 @@ export function GamePlay({
               <FaArrowLeft className="mr-2 h-4 w-4" />
               Nazaj na izbiro stopnje
             </Button>
-            <div className="flex items-start justify-between gap-8">
-              <div className="w-[40%]">
+            <div className="flex min-h-0 flex-1 items-start justify-between gap-8">
+              <div className="w-[40%] min-h-0">
                 <LevelGrid
                   level={level}
                   result={result}
@@ -215,8 +215,8 @@ export function GamePlay({
                 />
               </div>
   
-              <div className="flex h-full w-[60%]">
-                <div className="w-full">
+              <div className="flex h-full min-h-0 w-[60%]">
+                <div className="w-full h-full min-h-0">
                   <ActionBuilder
                     availableActions={level.actions}
                     actions={actions}

@@ -522,8 +522,8 @@ export function ActionBuilder({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="border-primary-700 flex h-full flex-col gap-4 rounded-lg border-2 p-4">
-        <div className="flex-1 overflow-hidden">
+      <div className="border-primary-700 flex h-full min-h-0 flex-col gap-4 rounded-lg border-2 p-4 overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-hidden">
           <ActionsDropZone
             actions={actions}
             onRemove={handleRemoveAction}
@@ -587,8 +587,8 @@ function ActionsDropZone({
   const { setNodeRef } = useDroppable({ id: 'actions-dropzone' });
 
   return (
-    <div className="flex h-full flex-row">
-      <div className="w-1/2 h-auto max-h-90 flex justify-center items-start overflow-y-auto">
+    <div className="flex h-full min-h-0 flex-row gap-2">
+      <div className="w-1/2 h-full min-h-0 flex justify-center items-start overflow-y-auto p-1">
         {actions.length > 0 && (
           <BlockIcon code={buildScratchCode(actions)} />
         )}
@@ -601,7 +601,7 @@ function ActionsDropZone({
       >
         <div
           ref={setNodeRef}
-          className="w-1/2 h-auto max-h-120 text-start gap-2 p-1 bg-gray-50 rounded-xl"
+          className="w-1/2 h-full min-h-0 text-start gap-2 p-1 bg-gray-50 rounded-xl"
         >
           <div className="h-full w-full flex flex-col p-2 rounded-lg bg-gray-800 text-gray-100 font-mono overflow-y-auto">
             {actions.length === 0 ? (
