@@ -23,7 +23,7 @@ export function GameControls({
   onSpeedChange,
 }: GameControlsProps) {
   return (
-    <div className="flex items-center gap-3 rounded-lg bg-white/10 px-4 py-2 backdrop-blur-sm">
+    <div className="flex flex-col gap-3 rounded-lg bg-white/10 px-4 py-2 backdrop-blur-sm sm:flex-row sm:items-center">
       <span className="text-sm font-semibold text-white">Hitrost:</span>
       <div className="relative flex items-center gap-3">
         <input
@@ -43,11 +43,11 @@ export function GameControls({
         </div>
       </div>
       
-    <div className="flex w-full justify-center gap-4">
+    <div className="flex w-full flex-wrap justify-center gap-4">
       <Button
         onClick={onUndo}
         outline
-        className="border-2 border-yellow-500 bg-transparent text-yellow-500 hover:bg-yellow-500/10"
+        className="w-full border-2 border-yellow-500 bg-transparent text-yellow-500 hover:bg-yellow-500/10 sm:w-44 md:w-48"
         disabled={!canUndo || isExecuting}
       >
         <HiRefresh className="mr-2 h-5 w-5 rotate-180" />
@@ -57,7 +57,7 @@ export function GameControls({
       <Button
         onClick={onExecute}
         outline
-        className="border-primary-500 bg-primary-600 hover:bg-primary-600 w-48 border-2 font-bold text-white"
+        className="border-primary-500 bg-primary-600 hover:bg-primary-600 w-full border-2 font-bold text-white sm:w-44 md:w-48"
         disabled={isExecuting || !hasActions}
       >
         <HiChevronRight className="mr-2 h-5 w-5" />
@@ -66,7 +66,7 @@ export function GameControls({
       <Button
         onClick={onReset}
         outline
-        className="w-48 border-2 border-white bg-transparent text-white hover:bg-white/10"
+        className="w-full border-2 border-white bg-transparent text-white hover:bg-white/10 sm:w-44 md:w-48"
         disabled={isExecuting}
       >
         <HiRefresh className="mr-2 h-5 w-5" />

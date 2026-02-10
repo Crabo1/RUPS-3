@@ -189,42 +189,44 @@ export function GamePlay({
   const circuitChallenge = getChallengeForLevel(level.index);
 
   return (
-      <div className="relative z-0 flex h-[calc(100vh-64px)] items-center justify-center p-8">
-        <div
-          className="relative h-full w-full overflow-hidden rounded-[8rem] bg-[#0F2F2C]"
-          style={{
-            boxShadow: `
-              0 0 0 8px #C2CED9,
-              0 0 0 128px #EBEEF3
-            `,
-          }}
-        >
-          <div className="flex h-full w-full flex-col justify-center gap-4 p-12">
+      <div className="relative z-0 flex min-h-[calc(100vh-64px)] items-center justify-center overflow-auto p-4 sm:p-6 lg:p-8">
+          <div
+            className="relative w-full max-w-[1600px] overflow-hidden rounded-[clamp(1.8rem,4.5vw,6.5rem)] bg-[#0F2F2C]"
+            style={{
+              boxShadow: `
+                0 0 0 clamp(2px, 0.55vw, 5px) #C2CED9,
+                0 0 0 clamp(10px, 3.5vw, 56px) #EBEEF3
+              `,
+            }}
+          >
+            <div className="grid h-full w-full grid-rows-[auto_1fr_auto] gap-4 overflow-auto p-[clamp(1rem,4vw,3rem)]">
             <Button onClick={onBack} outline size="lg" className="mt-4">
               <FaArrowLeft className="mr-2 h-4 w-4" />
               Nazaj na izbiro stopnje
             </Button>
-            <div className="flex min-h-0 flex-1 items-start justify-between gap-8">
-              <div className="w-[40%] min-h-0">
-                <LevelGrid
-                  level={level}
-                  result={result}
-                  rotationRef={rotationRef}
-                  lastDirectionRef={lastDirectionRef}
-                  isDead={isDead}
-                />
-              </div>
+              <div className="flex min-h-0 flex-col items-stretch gap-6 lg:flex-row lg:items-stretch">
+                <div className="w-full min-h-0 lg:w-[35%]">
+                  <div className="mx-auto w-full max-w-[min(100%,60vh)] lg:max-w-none">
+                    <LevelGrid
+                      level={level}
+                      result={result}
+                      rotationRef={rotationRef}
+                      lastDirectionRef={lastDirectionRef}
+                      isDead={isDead}
+                    />
+                  </div>
+                </div>
   
-              <div className="flex h-full min-h-0 w-[60%]">
-                <div className="w-full h-full min-h-0">
-                  <ActionBuilder
-                    availableActions={level.actions}
-                    actions={actions}
-                    onActionsChange={handleActionsChange}
-                  />
+                <div className="flex h-full min-h-0 w-full lg:w-[65%]">
+                  <div className="h-full w-full min-h-0 flex-1">
+                    <ActionBuilder
+                      availableActions={level.actions}
+                      actions={actions}
+                      onActionsChange={handleActionsChange}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
   
             <GameControls
               onExecute={handleExecute}
