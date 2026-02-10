@@ -47,8 +47,9 @@ export function useLevels() {
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 
-  const levels: Level[] = (levelsData?.levels || []).map((level) => ({
-    index: level.pos,
+  const levels: Level[] = (levelsData?.levels || []).sort((a, b) => a.pos - b.pos).map((level, index) => ({
+    index: index + 1,
+    backendPos: level.pos,
     name: level.name,
     description: level.description,
     actions: level.actions as Action[],

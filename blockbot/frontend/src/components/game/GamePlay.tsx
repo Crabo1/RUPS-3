@@ -100,41 +100,6 @@ export function GamePlay({
         lastDirectionRef.current = 'right';
       }
     } else if (finalState.isComplete) {
-      // Confetti animation
-      const confetti = () => {
-        const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
-        for (let i = 0; i < 150; i++) {
-          const particle = document.createElement('div');
-          particle.style.position = 'fixed';
-          particle.style.left = '50%';
-          particle.style.top = '20%';
-          particle.style.width = '7px';
-          particle.style.height = '7px';
-          particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-          particle.style.borderRadius = '50%';
-          particle.style.pointerEvents = 'none';
-          particle.style.zIndex = '9999';
-          document.body.appendChild(particle);
-
-          const angle = Math.random() * Math.PI * 2;
-          const velocity = 5 + Math.random() * 10;
-          let x = 0, y = 0, vy = -velocity;
-          const gravity = 0.9;
-
-          const animate = () => {
-            x += Math.cos(angle) * velocity;
-            y += vy;
-            vy += gravity;
-            particle.style.transform = `translate(${x}px, ${y}px)`;
-            particle.style.opacity = String(1 - y / 900);
-            if (y < 800) requestAnimationFrame(animate);
-            else particle.remove();
-          };
-          animate();
-        }
-      };
-      confetti();
-
       const actionsUsed = calculateActionsUsed(actions);
       const stars = MAX_ACTIONS - actionsUsed;
 
@@ -176,6 +141,65 @@ export function GamePlay({
   };
 
   const handleCircuitComplete = () => {
+    // Enhanced confetti animation from both sides
+    const confetti = () => {
+      const colors = ['#9333ea', '#a855f7', '#c084fc', '#e9d5ff', '#fbbf24', '#60a5fa', '#34d399', '#f472b6'];
+      const particleCount = 200;
+      
+      // Left side confetti - staggered release
+      for (let i = 0; i < particleCount / 2; i++) {
+        setTimeout(() => createConfettiParticle('left', colors), i * 10);
+      }
+      
+      // Right side confetti - staggered release
+      for (let i = 0; i < particleCount / 2; i++) {
+        setTimeout(() => createConfettiParticle('right', colors), i * 10);
+      }
+    };
+
+    const createConfettiParticle = (side: 'left' | 'right', colors: string[]) => {
+      const particle = document.createElement('div');
+      particle.style.position = 'fixed';
+      particle.style.left = side === 'left' ? '10%' : '90%';
+      particle.style.top = '20%';
+      particle.style.width = `${Math.random() * 10 + 5}px`;
+      particle.style.height = `${Math.random() * 10 + 5}px`;
+      particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '0%';
+      particle.style.pointerEvents = 'none';
+      particle.style.zIndex = '9999';
+      particle.style.opacity = '1';
+      document.body.appendChild(particle);
+
+      const angle = side === 'left' 
+        ? Math.random() * Math.PI / 3 - Math.PI / 6  // -30° to 30° from horizontal
+        : Math.PI - (Math.random() * Math.PI / 3 - Math.PI / 6); // 150° to 210°
+      
+      const velocity = 4 + Math.random() * 2;
+      const rotationSpeed = (Math.random() - 0.5) * 10;
+      let x = 0, y = 0, vy = -velocity, rotation = 0;
+      const gravity = 0.6;
+      const drift = (Math.random() - 0.5) * 2; 
+
+      const animate = () => {
+        x += Math.cos(angle) * velocity + drift;
+        y += vy;
+        vy += gravity;
+        rotation += rotationSpeed;
+        
+        particle.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+        particle.style.opacity = String(Math.max(0, 1 - y / 1000));
+        
+        if (y < 1000) {
+          requestAnimationFrame(animate);
+        } else {
+          particle.remove();
+        }
+      };
+      animate();
+    };
+
+    confetti();
     setCircuitCompleted(true);
     setShowCircuit(false);
     setShowPostCircuitModal(true);
